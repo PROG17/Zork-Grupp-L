@@ -45,6 +45,7 @@
     <Compile Include="Flag.cs" />
     <Compile Include="FurnishingItem.cs" />
     <Compile Include="GeneralObject.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="NPC.cs" />
     <Compile Include="Player.cs" />
