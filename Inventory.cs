@@ -1,88 +1,88 @@
-﻿using System.Collections.Generic;
-
-namespace Zork_Grupp_L
+﻿namespace Zork_Grupp_L
 {
-	public class Inventory
-	{
-		private readonly HashSet<InventoryItem> items;
+    using System.Collections.Generic;
 
-		public Inventory()
-		{
-			this.items = new HashSet<InventoryItem>();
-		}
+    public class Inventory
+    {
+        private readonly HashSet<InventoryItem> items;
 
-		public Inventory(params InventoryItem[] items)
-		{
-			this.items = new HashSet<InventoryItem>(items);
-		}
+        public Inventory()
+        {
+            this.items = new HashSet<InventoryItem>();
+        }
 
-		/// <summary>
-		/// Returns a comma seperated list of the items in this inventory.
-		/// </summary>
-		public string ListByName()
-		{
-			return string.Join(", ", items);
-		}
+        public Inventory(params InventoryItem[] items)
+        {
+            this.items = new HashSet<InventoryItem>(items);
+        }
 
-		/// <summary>
-		/// Add an item to this inventory. Returns true on success.
-		/// Fails if item already exists in this inventory.
-		/// </summary>
-		public bool Add(InventoryItem item)
-		{
-			if (item == null) return false;
+        /// <summary>
+        /// Add an item to this inventory. Returns true on success.
+        /// Fails if item already exists in this inventory.
+        /// </summary>
+        public bool Add(InventoryItem item)
+        {
+            if (item == null) return false;
 
-			return items.Add(item);
-		}
+            return this.items.Add(item);
+        }
 
-		/// <summary>
-		/// Removes an item from this inventory. Returns true on success.
-		/// Fails if item doens't exist in this inventory.
-		/// </summary>
-		public bool Remove(InventoryItem item)
-		{
-			if (item == null) return false;
+        /// <summary>
+        /// Returns true if this inventory contain <paramref name="item"/>.
+        /// </summary>
+        public bool Contains(InventoryItem item)
+        {
+            if (item == null) return false;
 
-			return items.Remove(item);
-		}
+            return this.items.Contains(item);
+        }
 
-		/// <summary>
-		/// Returns true if this inventory contain <paramref name="item"/>.
-		/// </summary>
-		public bool Contains(InventoryItem item)
-		{
-			if (item == null) return false;
+        /// <summary>
+        /// Returns a comma seperated list of the items in this inventory.
+        /// </summary>
+        public string ListByName()
+        {
+            return string.Join(", ", this.items);
+        }
 
-			return items.Contains(item);
-		}
+        /// <summary>
+        /// Removes an item from this inventory. Returns true on success.
+        /// Fails if item doens't exist in this inventory.
+        /// </summary>
+        public bool Remove(InventoryItem item)
+        {
+            if (item == null) return false;
 
-		/// <summary>
-		/// Takes <paramref name="item"/> from an inventory, removing it in the process.
-		/// Returns null if inventory does not contain <paramref name="item"/>.
-		/// </summary>
-		public InventoryItem Take(InventoryItem item)
-		{
-			if (item == null) return null;
-			if (!this.Contains(item)) return null;
+            return this.items.Remove(item);
+        }
 
-			this.Remove(item);
-			return item;
-		}
+        /// <summary>
+        /// Takes <paramref name="item"/> from an inventory, removing it in the process.
+        /// Returns null if inventory does not contain <paramref name="item"/>.
+        /// </summary>
+        public InventoryItem Take(InventoryItem item)
+        {
+            if (item == null) return null;
+            if (!this.Contains(item)) return null;
 
-		/// <summary>
-		/// Transfer <paramref name="item"/> from this inventory to another.
-		/// Returns true on success.
-		/// </summary>
-		public bool Transfer(InventoryItem item, Inventory target)
-		{
-			if (target == null) return false;
-			if (item == null) return false;
-			if (!this.Contains(item)) return false;
+            this.Remove(item);
+            return item;
+        }
 
-			this.Remove(item);
-			target.Add(item);
+        /// <summary>
+        /// Transfer <paramref name="item"/> from this inventory to another.
+        /// Returns true on success.
+        /// </summary>
+        public bool Transfer(InventoryItem item, Inventory target)
+        {
+            if (target == null) return false;
+            if (item == null) return false;
+            if (!this.Contains(item)) return false;
 
-			return true;
-		}
-	}
+            this.Remove(item);
+            target.Add(item);
+
+            return true;
+        }
+    }
 }
