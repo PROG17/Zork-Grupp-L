@@ -8,5 +8,6 @@ namespace Zork_Grupp_L
 {
     class Room : NamedObject
     {
+        internal HashSet<Inventory> roomInventory = new HashSet<Inventory>();
     }
 }
