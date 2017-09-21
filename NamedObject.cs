@@ -8,5 +8,6 @@ namespace Zork_Grupp_L
 {
     class NamedObject
     {
+
     }
 }
