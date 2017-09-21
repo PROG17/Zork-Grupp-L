@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-    class Game
+    public class NamedObject
     {
+        public string name;
+        public string description;
     }
 }

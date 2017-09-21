@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-    class NamedObject
+    class Room : NamedObject
     {
-        public string name;
-        public string description;
+        internal HashSet<Inventory> roomInventory = new HashSet<Inventory>();
     }
 }
