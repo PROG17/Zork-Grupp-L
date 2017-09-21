@@ -45,7 +45,9 @@
     <Compile Include="GameFunctions\Flag.cs" />
     <Compile Include="Items\FurnishingItem.cs" />
     <Compile Include="GameFunctions\Game.cs" />
+    <Compile Include="Items\ItemCylinderHat.cs" />
     <Compile Include="Items\ItemFrockCoat.cs" />
+    <Compile Include="Items\ItemTorch.cs" />
     <Compile Include="Player\Inventory.cs" />
     <Compile Include="Items\InventoryItem.cs" />
     <Compile Include="GameFunctions\NamedObject.cs" />

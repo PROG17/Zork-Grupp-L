@@ -9,7 +9,7 @@ namespace Zork_Grupp_L
     using Zork_Grupp_L.Items;
     using Zork_Grupp_L.Rooms;
 
-    static class Game
+    static class Game 
     {
         public static Player player;
         public static Room currentRoom;
@@ -18,6 +18,8 @@ namespace Zork_Grupp_L
         {
             var startRoom = new Dungeon();
             startRoom.AddToInventory(new ItemFrockCoat());
+            startRoom.AddToInventory(new ItemCylinderHat());
+            startRoom.AddToInventory(new ItemTorch());
 
             player = new Player();
             currentRoom = startRoom;
@@ -51,6 +53,16 @@ namespace Zork_Grupp_L
                 {
                     currentRoom.PrintDescription();
                 }
+
+            else if (userInput == "take" || userInput == "pick up")
+            {
+                   //kod för att ta något från rummets inventory till spelarens.
+            }
+            else if (userInput == "drop")
+            {
+                    /*Tänkte nåt sånt här men gick inte so I dont know..
+                   TakeFromInventory(userInput);*/
+            }
             }
             else
             {

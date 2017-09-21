@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-	public class InventoryItem : NamedObject
+	public class InventoryItem : Inventory//NamedObject //Borde inte inventoryItem ärva från Inventory så vi kommer åt den för items också???
     {
+
 
     }
 }

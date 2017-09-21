@@ -12,8 +12,8 @@ namespace Zork_Grupp_L
     {
         public Player()
         {
-            Console.WriteLine("Välkommen till spelet! woohoo!!!");
-            Console.Write("Vad heter du? ");
+            Console.WriteLine("Welcome to our game, let's play!");
+            Console.Write("What's your name? ");
             string username = Console.ReadLine();
             this.name = username;
         }
