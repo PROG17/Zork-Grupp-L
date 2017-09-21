@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Flag.cs" />
     <Compile Include="FurnishingItem.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="NamedObject.cs" />
