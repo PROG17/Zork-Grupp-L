@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-    class Item
+    class InventoryItem
     {
     }
 }
