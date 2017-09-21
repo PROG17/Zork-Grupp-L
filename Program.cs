@@ -10,6 +10,8 @@ namespace Zork_Grupp_L
 	{
 		static void Main(string[] args)
 		{
+            Game game = new Game();
+		    Console.ReadKey();
 		}
 	}
 }

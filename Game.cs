@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
+
     class Game
     {
+        private Player player;
+
+        public Game()
+        {
+            this.player = new Player();
+        }
     }
 }
