@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-
-    class GeneralObject
+    class NamedObject
     {
-        
     }
 }
