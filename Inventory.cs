@@ -1,4 +1,6 @@
-﻿namespace Zork_Grupp_L
+﻿using System.Linq;
+
+namespace Zork_Grupp_L
 {
     using System.Collections.Generic;
 
@@ -42,7 +44,7 @@
         /// </summary>
         public string ListByName()
         {
-            return string.Join(", ", this.items);
+            return string.Join(", ", this.items.Select(i => i.Name));
         }
 
         /// <summary>
