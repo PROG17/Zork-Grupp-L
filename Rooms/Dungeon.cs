@@ -10,9 +10,9 @@ namespace Zork_Grupp_L.Rooms
     {
         public Dungeon()
         {
-            this.name = "Dungeon";
-            this.description = "You're in an adequate-assed dungeon. Naked.";
-            this.roomInventory = new HashSet<Inventory>();
+            this.name = "dungeon";
+            this.description = "You're in an adequate-assed dungeon.";
+
         }
     }
 }

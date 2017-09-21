@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-    class Player : NamedObject
+    using Zork_Grupp_L.Rooms;
+
+    class Player : Inventory
     {
         public Player()
         {
@@ -15,5 +17,21 @@ namespace Zork_Grupp_L
             string username = Console.ReadLine();
             this.name = username;
         }
+
+        public bool isNaked
+        {
+            get
+            {
+                if (this.ContainsInInventory("Frock coat"))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
     }
 }

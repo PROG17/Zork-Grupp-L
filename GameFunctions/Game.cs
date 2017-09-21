@@ -6,14 +6,57 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
+    using Zork_Grupp_L.Items;
+    using Zork_Grupp_L.Rooms;
 
-    class Game
+    static class Game
     {
-        private Player player;
+        public static Player player;
+        public static Room currentRoom;
 
-        public Game()
+        public static void StartGame()
         {
-            this.player = new Player();
+            var startRoom = new Dungeon();
+            startRoom.AddToInventory(new ItemFrockCoat());
+
+            player = new Player();
+            currentRoom = startRoom;
+            currentRoom.PrintDescription();
+            while (true)
+            {
+                UserInput();
+            }
+        }
+
+        public static void UserInput()
+        {
+            string userInput = Console.ReadLine().ToLower().Trim();
+
+            if (userInput == "look around" || userInput == "look")
+            {
+                currentRoom.PrintDescription();
+            }
+            else if (userInput.StartsWith("poop"))
+            {
+               /* player.Poop(); */
+            }
+            else if (userInput == "inspect")
+            {
+                Console.WriteLine("Inspect what?");
+            }
+            else if (userInput.StartsWith("inspect "))
+            {
+                string whatIsInspected = userInput.Substring(userInput.IndexOf(" ") + 1);
+                if (whatIsInspected == currentRoom.name || whatIsInspected == "room")
+                {
+                    currentRoom.PrintDescription();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Sorry, I don't understand.");
+            }
+
         }
     }
 }

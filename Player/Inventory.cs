@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class Inventory
+    public class Inventory : NamedObject
     {
         private readonly HashSet<InventoryItem> items;
 
@@ -17,10 +17,10 @@
         }
 
         /// <summary>
-        /// Add an item to this inventory. Returns true on success.
+        /// AddToInventory an item to this inventory. Returns true on success.
         /// Fails if item already exists in this inventory.
         /// </summary>
-        public bool Add(InventoryItem item)
+        public bool AddToInventory(InventoryItem item)
         {
             if (item == null) return false;
 
@@ -30,26 +30,43 @@
         /// <summary>
         /// Returns true if this inventory contain <paramref name="item"/>.
         /// </summary>
-        public bool Contains(InventoryItem item)
+        public bool ContainsInInventory(InventoryItem item)
         {
             if (item == null) return false;
 
             return this.items.Contains(item);
+
+        }
+
+        public bool ContainsInInventory(string name)
+        {
+            if (name == null) return false;
+
+            foreach (InventoryItem inventoryItem in this.items)
+            {
+                if (name == inventoryItem.name) return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Returns a comma seperated list of the items in this inventory.
         /// </summary>
-        public string ListByName()
+        public string ListByNameInInventory()
         {
-            return string.Join(", ", this.items);
+            List<string> itemNames = new List<string>();
+            foreach (InventoryItem inventoryItem in this.items)
+            {
+                itemNames.Add(inventoryItem.name);
+            }
+            return string.Join(", ", itemNames);
         }
 
         /// <summary>
         /// Removes an item from this inventory. Returns true on success.
         /// Fails if item doens't exist in this inventory.
         /// </summary>
-        public bool Remove(InventoryItem item)
+        public bool RemoveFromInventory(InventoryItem item)
         {
             if (item == null) return false;
 
@@ -60,12 +77,12 @@
         /// Takes <paramref name="item"/> from an inventory, removing it in the process.
         /// Returns null if inventory does not contain <paramref name="item"/>.
         /// </summary>
-        public InventoryItem Take(InventoryItem item)
+        public InventoryItem TakeFromInventory(InventoryItem item)
         {
             if (item == null) return null;
-            if (!this.Contains(item)) return null;
+            if (!this.ContainsInInventory(item)) return null;
 
-            this.Remove(item);
+            this.RemoveFromInventory(item);
             return item;
         }
 
@@ -73,14 +90,14 @@
         /// Transfer <paramref name="item"/> from this inventory to another.
         /// Returns true on success.
         /// </summary>
-        public bool Transfer(InventoryItem item, Inventory target)
+        public bool TransferBetweenInventories(InventoryItem item, Inventory target)
         {
             if (target == null) return false;
             if (item == null) return false;
-            if (!this.Contains(item)) return false;
+            if (!this.ContainsInInventory(item)) return false;
 
-            this.Remove(item);
-            target.Add(item);
+            this.RemoveFromInventory(item);
+            target.AddToInventory(item);
 
             return true;
         }

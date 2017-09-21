@@ -6,8 +6,24 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L
 {
-    class Room : NamedObject
+    class Room : Inventory
     {
-        internal HashSet<Inventory> roomInventory = new HashSet<Inventory>();
+        public void PrintDescription()
+        {
+            Console.Write("{0}", this.description);
+            
+            if (Game.player.isNaked)
+            {
+                Console.WriteLine(" You are naked.");
+            }
+
+            Console.WriteLine("In this room you see {0}", this.ListByNameInInventory());
+        }
+
+        public void PrintInspect()
+        {
+            Console.WriteLine("{0}", this.description);
+        }
+
     }
 }
