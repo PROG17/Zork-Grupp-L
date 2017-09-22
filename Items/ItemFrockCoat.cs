@@ -10,7 +10,7 @@ namespace Zork_Grupp_L.Items
     {
         public ItemFrockCoat()
         {
-            this.name = "Frock Coat";
+            this.name = "frock coat";
             this.description = "It's a sweet looking frock coat, straight outta Nobelfesten";
 
         }

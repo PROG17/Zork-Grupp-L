@@ -10,7 +10,7 @@ namespace Zork_Grupp_L.Items
     {
         public ItemCylinderHat()
         {
-            this.name = "Cylinder Hat";
+            this.name = "cylinder hat";
             this.description = "This is a fancy hat for fancy people.";
         }
         

@@ -10,7 +10,7 @@ namespace Zork_Grupp_L.Items
     {
         public ItemTorch()
         {
-            this.name = "Torch";
+            this.name = "torch";
             this.description = "This torch can be used for seeing in the dark or burning things.";
         }
     }

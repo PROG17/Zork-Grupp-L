@@ -13,17 +13,16 @@ namespace Zork_Grupp_L
     {
         public static Player player;
         public static Room currentRoom;
-
         public static void StartGame()
         {
             var startRoom = new Dungeon();
             startRoom.AddToInventory(new ItemFrockCoat());
             startRoom.AddToInventory(new ItemCylinderHat());
             startRoom.AddToInventory(new ItemTorch());
-
             player = new Player();
-            currentRoom = startRoom;
+            currentRoom = startRoom;            
             currentRoom.PrintDescription();
+
             while (true)
             {
                 UserInput();
@@ -40,7 +39,7 @@ namespace Zork_Grupp_L
             }
             else if (userInput.StartsWith("poop"))
             {
-               /* player.Poop(); */
+                /* player.Poop(); */
             }
             else if (userInput == "inspect")
             {
@@ -53,17 +52,23 @@ namespace Zork_Grupp_L
                 {
                     currentRoom.PrintDescription();
                 }
+                else if (currentRoom.ContainsInInventory(whatIsInspected))
+                {
+                    //kod för att hämta beskrivning av item
+                }
+                
+            }
 
             else if (userInput == "take" || userInput == "pick up")
             {
-                   //kod för att ta något från rummets inventory till spelarens.
+                //kod för att ta något från rummets inventory till spelarens.
             }
             else if (userInput == "drop")
             {
-                    /*Tänkte nåt sånt här men gick inte so I dont know..
-                   TakeFromInventory(userInput);*/
+                //Tänkte nåt sånt här men gick inte so I dont know..
+                //currentRoom.RemoveFromInventory();
             }
-            }
+
             else
             {
                 Console.WriteLine("Sorry, I don't understand.");
