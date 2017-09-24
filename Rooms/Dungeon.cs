@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L.Rooms
 {
-    class Dungeon : Room
+    public class Dungeon : Room
     {
         public Dungeon()
         {
-            this.name = "dungeon";
-            this.description = "You're in an adequate-assed dungeon.";
-
+            this.Name = "dungeon";
+            this.Description = "You're in an adequate-assed dungeon.";
         }
+
+	    public override string Name { get; }
+	    public override string Description { get; }
     }
 }

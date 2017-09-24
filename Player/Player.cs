@@ -3,35 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zork_Grupp_L.GameFunctions;
 
 namespace Zork_Grupp_L
 {
     using Zork_Grupp_L.Rooms;
 
-    class Player : Inventory
+    public class Player : Inventory
     {
         public Player()
         {
-            Console.WriteLine("Welcome to our game, let's play!");
-            Console.Write("What's your name? ");
+	        Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("What's your Name?");
+			Console.Write("> ");
+	        Console.ForegroundColor = ConsoleColor.White;
+
             string username = Console.ReadLine();
-            this.name = username;
+            this.Name = username;
         }
 
-        public bool isNaked
-        {
-            get
-            {
-                if (this.ContainsInInventory("Frock coat"))
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
+	    public override string Name { get; }
+	    public override string Description => $"This is you, {this.Name}.";
 
+        public bool IsNaked => !this.InventoryFindItem("Frock coat");
     }
 }
