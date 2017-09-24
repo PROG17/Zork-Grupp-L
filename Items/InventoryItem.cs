@@ -16,13 +16,18 @@ namespace Zork_Grupp_L
 	    public virtual string ListPrefix { get; } = null;
 
 		/// <summary>
+		/// <see cref="NamedObject.Name"/> combined with <see cref="ListPrefix"/>.
+		/// </summary>
+	    public string PrefixedName => ListPrefix == null ? this.Name.AutoAorAn() : $"{ListPrefix} {this.Name}";
+
+		/// <summary>
 		/// The inventory this item belongs to.
 		/// </summary>
 		public Inventory CurrentInventory { get; private set; }
 		
         public void PrintItemDescription()
         {
-	        Console.ForegroundColor = ConsoleColor.Gray;
+	        Console.ForegroundColor = Colors.DefaultColor;
             Console.WriteLine("You take a closer look at the {0}. {1}", this.Name, this.Description);
         }
 

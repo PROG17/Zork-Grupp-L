@@ -11,7 +11,7 @@ namespace Zork_Grupp_L.Items
 		public ItemFrockCoat()
 		{
 			this.Name = "frock coat";
-			this.Description = "It's a sweet looking frock coat, straight outta Nobelfesten";
+			this.Description = "It's a sweet looking frock coat, straight outta Nobelfesten.";
 		}
 
 		public override string Name { get; }

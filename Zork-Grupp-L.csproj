@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandInspect.cs" />
+    <Compile Include="Commands\CommandDrop.cs" />
+    <Compile Include="Commands\CommandPickup.cs" />
+    <Compile Include="Helpers\Colors.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Items\FurnishingItem.cs" />
     <Compile Include="GameFunctions\Game.cs" />
@@ -60,5 +65,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

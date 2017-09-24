@@ -20,12 +20,12 @@ namespace Zork_Grupp_L.GameFunctions
 		/// <summary>
 		/// Gets the number of items in this inventory.
 		/// </summary>
-	    public int Count => this.items.Count;
+	    public int InventoryItemsCount => this.items.Count;
 
 		/// <summary>
 		/// Gives true if there's no items in this inventory.
 		/// </summary>
-	    public bool IsEmpty => this.items.Count == 0;
+	    public bool IsInventoryEmpty => this.items.Count == 0;
 
         /// <summary>
         /// AddToInventory an item to this inventory. Returns true on success.
@@ -67,18 +67,11 @@ namespace Zork_Grupp_L.GameFunctions
 		/// </summary>
 		public string[] InventoryGetNames(bool addPrefix = false)
 		{
-			var itemNames = new List<string>(this.Count);
+			var itemNames = new List<string>(this.InventoryItemsCount);
 
 			foreach (InventoryItem inventoryItem in this.items)
 			{
-
-				if (addPrefix)
-				{
-					string prefix = inventoryItem.ListPrefix;
-					itemNames.Add(prefix == null ? inventoryItem.Name.AutoAorAn() : $"{prefix} {inventoryItem.Name}");
-				}
-				else
-					itemNames.Add(inventoryItem.Name);
+				itemNames.Add(addPrefix ? inventoryItem.PrefixedName : inventoryItem.Name);
 			}
 
 			return itemNames.ToArray();
@@ -138,6 +131,15 @@ namespace Zork_Grupp_L.GameFunctions
 			}
 
 		    return null;
+	    }
+
+	    /// <summary>
+	    /// Try find an item in the inventory. Returns false if not found.
+	    /// </summary>
+		public bool InventoryFindItem(string needle, out InventoryItem item)
+	    {
+		    item = InventoryFindItem(needle);
+		    return item != null;
 	    }
     }
 }

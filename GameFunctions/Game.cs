@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L
 {
-	using Zork_Grupp_L.Items;
-	using Zork_Grupp_L.Rooms;
+	using Items;
+	using Rooms;
+	using Commands;
 
 	public static class Game
 	{
 		public static Player CurrentPlayer { get; private set; }
 		public static Room CurrentRoom { get; private set; }
 
+		private static readonly Command[] commands = {
+			new CommandInspect(),
+			new CommandPickup(),
+			new CommandDrop(),
+		};
+
 		public static void StartGame()
 		{
-			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.ForegroundColor = Colors.ImportantColor;
 			Console.WriteLine("Welcome to our game, let's play!");
-			Console.ForegroundColor = ConsoleColor.Gray;
+			Console.ForegroundColor = Colors.DefaultColor;
 
 			var startRoom = new Dungeon();
 			startRoom.AddToInventory(new ItemFrockCoat());
@@ -36,66 +44,36 @@ namespace Zork_Grupp_L
 
 		public static void UserInput()
 		{
-			Console.ForegroundColor = ConsoleColor.Gray;
+			Console.ForegroundColor = Colors.DefaultColor;
 			Console.Write("> ");
-			Console.ForegroundColor = ConsoleColor.White;
+			Console.ForegroundColor = Colors.InputColor;
 
-			string rawUserInput = Console.ReadLine().Trim();
-			string userInput = rawUserInput.ToLower();
+			string trimmedInput = Console.ReadLine().Trim();
 
-			Console.ForegroundColor = ConsoleColor.Gray;
-
-			if (userInput == "look around" || userInput == "look")
+			if (trimmedInput == string.Empty)
 			{
-				CurrentRoom.PrintRoomDescription();
-			}
-			else if (userInput.StartsWith("poop"))
-			{
-				/* CurrentPlayer.Poop(); */
-			}
-			else if (userInput == "inspect")
-			{
-				Console.WriteLine("Inspect what?");
-			}
-			else if (userInput.StartsWith("inspect "))
-			{
-				string rawWhatIsInspected = rawUserInput.Substring("inspect ".Length);
-				string whatIsInspected = rawWhatIsInspected.ToLower();
-
-				if (whatIsInspected == CurrentRoom.Name || whatIsInspected == "room")
-				{
-					CurrentRoom.PrintRoomDescription();
-				}
-				else
-				{
-					//kod för att hämta beskrivning av item
-					InventoryItem item = CurrentRoom.InventoryFindItem(whatIsInspected);
-					if (item == null) CurrentPlayer.InventoryFindItem(whatIsInspected);
-
-					if (item == null)
-					{
-						Console.WriteLine("There's no {0} in the vicinity...", rawWhatIsInspected);
-					}
-					else
-					{
-						item.PrintItemDescription();
-					}
-				}
-
-			}
-			else if (userInput == "take" || userInput == "pick up")
-			{
-				//kod för att ta något från rummets inventory till spelarens.
-			}
-			else if (userInput == "drop")
-			{
-				//Tänkte nåt sånt här men gick inte so I dont know..
-				//CurrentRoom.InventoryRemoveItem();
+				Console.ForegroundColor = Colors.ErrorColor;
+				Console.WriteLine("I beg your pardon?");
 			}
 			else
 			{
-				Console.ForegroundColor = ConsoleColor.DarkYellow;
-				Console.WriteLine("Sorry, I don't understand.");
+				Console.ForegroundColor = Colors.DefaultColor;
+
+				bool any = false;
+				foreach (Command cmd in commands)
+				{
+					if (cmd.TryExecute(trimmedInput))
+					{
+						any = true;
+						break;
+					}
+				}
+
+				if (!any)
+				{
+					Console.ForegroundColor = Colors.ErrorColor;
+					Console.WriteLine("Sorry, I don't understand.");
+				}
 			}
 
 		}

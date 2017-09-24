@@ -68,5 +68,17 @@ namespace Zork_Grupp_L.Helpers
 			return vowels.IndexOf(c) != -1;
 		}
 
+		/// <summary>
+		/// Converts the first character to uppercase
+		/// </summary>
+		public static string ToFirstUpper(this string text)
+		{
+			if (text == null) return null;
+			if (text.Length == 0) return text;
+			if (text.Length == 1) return text.ToUpper();
+
+			return char.ToUpper(text[0]) + text.Substring(1);
+		}
+
 	}
 }
