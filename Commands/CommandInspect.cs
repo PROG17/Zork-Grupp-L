@@ -41,7 +41,7 @@ namespace Zork_Grupp_L.Commands
 					{
 						Game.CurrentRoom.PrintRoomDescription();
 					}
-					else if (Regex.IsMatch(whatToInspect, @"\b(self|myself|me|player)\b", RegexOptions.IgnoreCase))
+					else if (Regex.IsMatch(whatToInspect, @"\b(self|myself|me|player|yourself)\b", RegexOptions.IgnoreCase))
 					{
 						Game.CurrentPlayer.PrintPlayerDescription();
 					}
