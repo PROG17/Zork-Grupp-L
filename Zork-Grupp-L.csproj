@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\CommandInspect.cs" />
     <Compile Include="Commands\CommandDrop.cs" />
     <Compile Include="Commands\CommandPickup.cs" />

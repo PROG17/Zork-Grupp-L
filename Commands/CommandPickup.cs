@@ -4,17 +4,20 @@ using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Commands
 {
-	public class CommandPickup : Command
+	public class CommandPickup : BaseCommand
 	{
 		public override string[] Syntax { get; } = {
-			@"(pick *up|take|grab)(?: +(?:the +)?(.+))?",
+			$@"(?<cmd>pick *up|take|grab){P_THE}(?<what>.+)?",
 		};
 
 		public override void Execute(Match match, string pattern)
 		{
-			if (match.Groups.Count == 3)
+			Group g_cmd = match.Groups["cmd"];
+			Group g_what = match.Groups["what"];
+
+			if (g_what.Success)
 			{
-				string whatToPickup = match.Groups[2].Value;
+				string whatToPickup = g_what.Value;
 
 				if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out InventoryItem item))
 				{
@@ -34,12 +37,14 @@ namespace Zork_Grupp_L.Commands
 			}
 			else
 			{
-				string cmd = match.Groups[1].Value.StartsWith("pick")
-					? "Pickup"
-					: match.Groups[1].Value.ToFirstUpper();
-
 				Console.ForegroundColor = Colors.ErrorColor;
-				Console.WriteLine("{0} what?", cmd);
+				string cmd = g_cmd.Value.ToLower();
+
+				// Custom check because you can type "pick        up"
+				if (!g_cmd.Success || cmd.StartsWith("pick"))
+					Console.WriteLine("Pick up what?");
+				else
+					Console.WriteLine("{0} what?", cmd.ToFirstUpper());
 			}
 		}
 	}

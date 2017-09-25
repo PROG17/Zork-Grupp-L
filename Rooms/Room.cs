@@ -9,11 +9,17 @@ namespace Zork_Grupp_L.Rooms
         public void PrintRoomDescription()
         {
 	        Console.ForegroundColor = Colors.DefaultColor;
-            Console.WriteLine("{0} ", this.Description);
-
-			if (!this.IsInventoryEmpty)
-				Console.WriteLine("In this room you see {0}", this.InventoryListNames());
+            Console.WriteLine("You look around the {0}. {1}", this.Name, this.Description);
+			this.PrintRoomInventory();
         }
+
+	    public void PrintRoomInventory()
+	    {
+			if (this.IsInventoryEmpty)
+				Console.WriteLine("This room is empty.");
+			else
+				Console.WriteLine("In this room you see {0}.", this.InventoryListNames());
+		}
 
     }
 }

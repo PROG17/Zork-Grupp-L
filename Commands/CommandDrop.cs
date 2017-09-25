@@ -4,17 +4,20 @@ using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Commands
 {
-	public class CommandDrop : Command
+	public class CommandDrop : BaseCommand
 	{
 		public override string[] Syntax { get; } = {
-			@"(drop)(?: +(?:the +)?(.+))?",
+			$@"(?<cmd>drop){P_THE}(?<what>.+)?",
 		};
 
 		public override void Execute(Match match, string pattern)
 		{
-			if (match.Groups.Count == 3)
+			Group g_cmd = match.Groups["cmd"];
+			Group g_what = match.Groups["what"];
+
+			if (g_what.Success)
 			{
-				string whatToPickup = match.Groups[2].Value;
+				string whatToPickup = g_what.Value;
 
 				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out InventoryItem item))
 				{
@@ -34,7 +37,7 @@ namespace Zork_Grupp_L.Commands
 			}
 			else
 			{
-				string cmd = match.Groups[1].Value.ToFirstUpper();
+				string cmd = g_cmd.Value.ToLower().ToFirstUpper();
 
 				Console.ForegroundColor = Colors.ErrorColor;
 				Console.WriteLine("{0} what?", cmd);

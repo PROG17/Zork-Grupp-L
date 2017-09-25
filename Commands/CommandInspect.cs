@@ -4,49 +4,55 @@ using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Commands
 {
-	public class CommandInspect : Command
+	public class CommandInspect : BaseCommand
 	{
-		public override string[] Syntax { get; } = {
+		public override string[] Syntax { get; } =
+		{
 			@"look",
 			@"look +around",
 			@"who +am +i",
 			@"whoami",
-			@"inventory",
-			@"items",
-			@"(look +at|examine|inspect)(?: +(?:the +)?(.+))?",
+			@"(?<what>room|inventory|items)",
+			$@"(?<cmd>look +at|examine|inspect|check){P_THE}(?<what>.+)?",
 		};
 
 		public override void Execute(Match match, string pattern)
 		{
-			if (pattern == "look" || pattern == "look +around")
+			Group g_what = match.Groups["what"];
+			Group g_cmd = match.Groups["cmd"];
+
+			if (pattern.StartsWith("look")) // look & look around
 			{
 				Game.CurrentRoom.PrintRoomDescription();
 			}
-			else if (pattern == "who +am +i" || pattern == "whoami")
+			else if (pattern.StartsWith("who")) // whoami
 			{
 				Console.WriteLine(Game.CurrentPlayer.Name);
 			}
-			else if (pattern == "inventory" || pattern == "items")
-			{
-				Game.CurrentPlayer.PrintPlayerInventory();
-			}
 			else
 			{
-				if (match.Groups.Count == 3)
+				if (g_what.Success)
 				{
-					string whatToInspect = match.Groups[2].Value;
+					string whatToInspect = g_what.Value;
 					string whatToInspectLower = whatToInspect.ToLower();
 
-					if (StringHelper.KindaEquals(whatToInspect, Game.CurrentRoom.Name) || whatToInspectLower == "room")
+					if (StringHelper.KindaEquals(whatToInspect, Game.CurrentRoom.Name)
+					    || whatToInspectLower == "room")
 					{
 						Game.CurrentRoom.PrintRoomDescription();
 					}
-					else if (Regex.IsMatch(whatToInspect, @"\b(self|myself|me|player|yourself)\b", RegexOptions.IgnoreCase))
+					else if (StringHelper.EqualsAny(whatToInspectLower,
+						"self", "myself", "me", "yourself", "player", "user"))
 					{
 						Game.CurrentPlayer.PrintPlayerDescription();
 					}
-					else if (Regex.IsMatch(whatToInspect, @"\b(inventory|items)\b", RegexOptions.IgnoreCase))
+					else if (whatToInspectLower == "inventory")
 					{
+						Game.CurrentPlayer.PrintPlayerInventory();
+					}
+					else if (whatToInspectLower == "items")
+					{
+						Game.CurrentRoom.PrintRoomInventory();
 						Game.CurrentPlayer.PrintPlayerInventory();
 					}
 					else
@@ -65,10 +71,15 @@ namespace Zork_Grupp_L.Commands
 				}
 				else
 				{
-					string cmd = match.Groups[1].Value.StartsWith("look") ? "Look at" : match.Groups[1].Value.ToFirstUpper();
-
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("{0} what?", cmd);
+					
+					string cmd = g_cmd.Value.ToLower();
+
+					// Custom check because you can type "look           at"
+					if (!g_cmd.Success || cmd.StartsWith("look"))
+						Console.WriteLine("Look at what?");
+					else
+						Console.WriteLine("{0} what?", cmd.ToFirstUpper());
 				}
 			}
 		}

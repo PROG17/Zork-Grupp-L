@@ -46,23 +46,22 @@ namespace Zork_Grupp_L
 	    public void PrintPlayerDescription()
 	    {
 			Console.ForegroundColor = Colors.DefaultColor;
-		    Console.Write("You find yourself being {0}, a wild {1}adventurer in the {2}. ",
+		    Console.WriteLine("You find yourself being {0}, a wild {1}adventurer in the {2}. ",
 			    this.Name,
 			    this.IsNaked ? "naked " : string.Empty,
 			    Game.CurrentRoom.Name);
+
 			this.PrintPlayerInventory();
 	    }
 
 	    public void PrintPlayerInventory()
 	    {
-			if (this.IsInventoryEmpty)
-			{
-				Console.WriteLine("You are not carrying anything.");
-			}
-			else
-			{
-				Console.WriteLine("You are currently carrying {0}.", this.InventoryListNames());
-			}
-		}
+			Console.ForegroundColor = Colors.DefaultColor;
+
+		    if (this.IsInventoryEmpty)
+			    Console.WriteLine("You are not carrying anything.");
+		    else
+			    Console.WriteLine("You are currently carrying {0}.", this.InventoryListNames());
+	    }
     }
 }

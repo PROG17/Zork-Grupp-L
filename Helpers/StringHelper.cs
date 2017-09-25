@@ -80,5 +80,17 @@ namespace Zork_Grupp_L.Helpers
 			return char.ToUpper(text[0]) + text.Substring(1);
 		}
 
+		public static bool EqualsAny(string needle, params string[] haystack)
+		{
+			if (haystack == null) return false;
+			if (haystack.Length == 0) return false;
+
+			foreach (string item in haystack)
+				if (item == needle)
+					return true;
+
+			return false;
+		}
+
 	}
 }

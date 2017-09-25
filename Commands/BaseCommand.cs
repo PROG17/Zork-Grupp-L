@@ -1,9 +1,12 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Zork_Grupp_L.Commands
 {
-	public abstract class Command
+	public abstract class BaseCommand
 	{
+		protected const string P_THE = @"($| +| +the( +|$))";
+
 		public abstract string[] Syntax { get; }
 
 		public abstract void Execute(Match match, string pattern);
@@ -12,7 +15,9 @@ namespace Zork_Grupp_L.Commands
 		{
 			foreach (string pattern in this.Syntax)
 			{
-				Match match = Regex.Match(trimmedInput, $"^{pattern.Replace(" ", @"\s")}$", RegexOptions.IgnoreCase);
+				string actualPattern = $"^{pattern.Replace(" ", @"\s")}$";
+
+				Match match = Regex.Match(trimmedInput, actualPattern, RegexOptions.IgnoreCase);
 				if (match.Success)
 				{
 					this.Execute(match, pattern);

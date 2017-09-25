@@ -16,7 +16,7 @@ namespace Zork_Grupp_L
 		public static Player CurrentPlayer { get; private set; }
 		public static Room CurrentRoom { get; private set; }
 
-		private static readonly Command[] commands = {
+		private static readonly BaseCommand[] commands = {
 			new CommandInspect(),
 			new CommandPickup(),
 			new CommandDrop(),
@@ -29,10 +29,6 @@ namespace Zork_Grupp_L
 			Console.ForegroundColor = Colors.DefaultColor;
 
 			var startRoom = new Dungeon();
-			startRoom.AddToInventory(new ItemFrockCoat());
-			startRoom.AddToInventory(new ItemCylinderHat());
-			startRoom.AddToInventory(new ItemTorch());
-            startRoom.AddToFurnishingInventory(new ItemPuddle());
 			CurrentPlayer = new Player();
 			CurrentRoom = startRoom;
 			CurrentRoom.PrintRoomDescription();
@@ -61,7 +57,7 @@ namespace Zork_Grupp_L
 				Console.ForegroundColor = Colors.DefaultColor;
 
 				bool any = false;
-				foreach (Command cmd in commands)
+				foreach (BaseCommand cmd in commands)
 				{
 					if (cmd.TryExecute(trimmedInput))
 					{
