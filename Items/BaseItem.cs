@@ -24,7 +24,7 @@ namespace Zork_Grupp_L.Items
 		public void PrintItemDescription()
 		{
 			Console.ForegroundColor = Colors.DefaultColor;
-			Console.WriteLine("You take a closer look at the {0}. {1}", this.Name, this.Description);
+			ConsoleHelper.WriteLineWrap("You take a closer look at the {0}. {1}", this.Name, this.Description);
 		}
 
 		public virtual void OnAddedToInventory(Inventory inventory)

@@ -15,7 +15,7 @@ namespace Zork_Grupp_L
         public Player()
         {
 	        Console.ForegroundColor = Colors.DefaultColor;
-            Console.WriteLine("What's your Name?");
+	        ConsoleHelper.WriteLineWrap("What's your Name?");
 
 	        string username = null;
 	        while (string.IsNullOrEmpty(username))
@@ -35,7 +35,7 @@ namespace Zork_Grupp_L
 
 		    this.Name = username;
 	        Console.ForegroundColor = Colors.DefaultColor;
-			Console.WriteLine("Be greeted, {0}!", username);
+	        ConsoleHelper.WriteLineWrap("Be greeted, {0}!", username);
         }
 
 	    public override string Name { get; }
@@ -46,7 +46,7 @@ namespace Zork_Grupp_L
 	    public void PrintPlayerDescription()
 	    {
 			Console.ForegroundColor = Colors.DefaultColor;
-		    Console.WriteLine("You find yourself being {0}, a wild {1}adventurer in the {2}. ",
+		    ConsoleHelper.WriteLineWrap("You find yourself being {0}, a wild {1}adventurer in the {2}. ",
 			    this.Name,
 			    this.IsNaked ? "naked " : string.Empty,
 			    Game.CurrentRoom.Name);
@@ -59,9 +59,9 @@ namespace Zork_Grupp_L
 			Console.ForegroundColor = Colors.DefaultColor;
 
 		    if (this.IsInventoryEmpty)
-			    Console.WriteLine("You are not carrying anything.");
+			    ConsoleHelper.WriteLineWrap("You are not carrying anything.");
 		    else
-			    Console.WriteLine("You are currently carrying {0}.", this.InventoryListNames());
+			    ConsoleHelper.WriteLineWrap("You are currently carrying {0}.", this.InventoryListNames());
 	    }
     }
 }

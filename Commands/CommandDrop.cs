@@ -23,17 +23,17 @@ namespace Zork_Grupp_L.Commands
 				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out BaseItem item))
 				{
 					Game.CurrentPlayer.InventoryTransferItem(item, Game.CurrentRoom);
-					Console.WriteLine("You dropped up the {0}.", item.Name);
+					ConsoleHelper.WriteLineWrap("You dropped up the {0}.", item.Name);
 				}
 				else if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out item))
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("You aren't even carrying {0}, silly.", item.PrefixedName);
+					ConsoleHelper.WriteLineWrap("You aren't even carrying {0}, silly.", item.PrefixedName);
 				}
 				else
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("You can't see any '{0}' nearby...", whatToPickup);
+					ConsoleHelper.WriteLineWrap("You can't see any '{0}' nearby...", whatToPickup);
 				}
 			}
 			else
@@ -41,7 +41,7 @@ namespace Zork_Grupp_L.Commands
 				string cmd = g_cmd.Value.ToLower().ToFirstUpper();
 
 				Console.ForegroundColor = Colors.ErrorColor;
-				Console.WriteLine("{0} what?", cmd);
+				ConsoleHelper.WriteLineWrap("{0} what?", cmd);
 			}
 		}
 	}

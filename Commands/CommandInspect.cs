@@ -65,7 +65,7 @@ namespace Zork_Grupp_L.Commands
 						else
 						{
 							Console.ForegroundColor = Colors.ErrorColor;
-							Console.WriteLine("There's no {0} in the vicinity...", whatToInspect);
+							ConsoleHelper.WriteLineWrap("There's no {0} in the vicinity...", whatToInspect);
 						}
 					}
 				}
@@ -77,9 +77,9 @@ namespace Zork_Grupp_L.Commands
 
 					// Custom check because you can type "look           at"
 					if (!g_cmd.Success || cmd.StartsWith("look"))
-						Console.WriteLine("Look at what?");
+						ConsoleHelper.WriteLineWrap("Look at what?");
 					else
-						Console.WriteLine("{0} what?", cmd.ToFirstUpper());
+						ConsoleHelper.WriteLineWrap("{0} what?", cmd.ToFirstUpper());
 				}
 			}
 		}

@@ -25,23 +25,23 @@ namespace Zork_Grupp_L.Commands
 					if (item is InventoryItem)
 					{
 						Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
-						Console.WriteLine("You picked up the {0}.", item.Name);
+						ConsoleHelper.WriteLineWrap("You picked up the {0}.", item.Name);
 					}
 					else
 					{
 						Console.ForegroundColor = Colors.ErrorColor;
-						Console.WriteLine("You cannot pick up {0}. Sorry.", item.PrefixedName);
+						ConsoleHelper.WriteLineWrap("You cannot pick up {0}. Sorry.", item.PrefixedName);
 					}
 				}
 				else if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out item))
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("You are already carrying {0}, dum dum.", item.PrefixedName);
+					ConsoleHelper.WriteLineWrap("You are already carrying {0}, dum dum.", item.PrefixedName);
 				}
 				else
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("There's no {0} in the vicinity...", whatToPickup);
+					ConsoleHelper.WriteLineWrap("There's no {0} in the vicinity...", whatToPickup);
 				}
 			}
 			else
@@ -51,9 +51,9 @@ namespace Zork_Grupp_L.Commands
 
 				// Custom check because you can type "pick        up"
 				if (!g_cmd.Success || cmd.StartsWith("pick"))
-					Console.WriteLine("Pick up what?");
+					ConsoleHelper.WriteLineWrap("Pick up what?");
 				else
-					Console.WriteLine("{0} what?", cmd.ToFirstUpper());
+					ConsoleHelper.WriteLineWrap("{0} what?", cmd.ToFirstUpper());
 			}
 		}
 	}

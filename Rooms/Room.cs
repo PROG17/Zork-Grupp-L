@@ -11,21 +11,21 @@ namespace Zork_Grupp_L.Rooms
 	        Console.ForegroundColor = Colors.DefaultColor;
 	        if (Game.CurrentRoom == this)
 	        {
-		        Console.WriteLine("You are in the {0}. {1}", this.Name, this.Description);
+		        ConsoleHelper.WriteLineWrap("You are in the {0}. {1}", this.Name, this.Description);
 		        this.PrintRoomInventory();
 			}
 	        else
 	        {
-		        Console.WriteLine("You look around the {0}. {1}", this.Name, this.Description);
+		        ConsoleHelper.WriteLineWrap("You look around the {0}. {1}", this.Name, this.Description);
 	        }
         }
 
 	    public void PrintRoomInventory()
 	    {
 			if (this.IsInventoryEmpty)
-				Console.WriteLine("This room is empty.");
+				ConsoleHelper.WriteLineWrap("This room is empty.");
 			else
-				Console.WriteLine("In this room you see {0}.", this.InventoryListNames());
+				ConsoleHelper.WriteLineWrap("In this room you see {0}.", this.InventoryListNames());
 		}
 
     }
