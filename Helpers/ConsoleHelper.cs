@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Zork_Grupp_L.Helpers
 {
 	public static class ConsoleHelper
 	{
-
+		[StringFormatMethod("format")]
 		public static void WriteWrap(string format, params object[] args)
 		{
 			WriteWrap(arg: string.Format(format, args));
@@ -30,6 +31,7 @@ namespace Zork_Grupp_L.Helpers
 			}
 		}
 
+		[StringFormatMethod("format")]
 		public static void WriteLineWrap(string format, params object[] args)
 		{
 			WriteLineWrap(arg: string.Format(format, args));
