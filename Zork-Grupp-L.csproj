@@ -48,6 +48,7 @@
     <Compile Include="Commands\CommandPickup.cs" />
     <Compile Include="Helpers\Colors.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Items\ItemPuddle.cs" />
     <Compile Include="Items\FurnishingItem.cs" />
     <Compile Include="GameFunctions\Game.cs" />
     <Compile Include="Items\ItemCylinderHat.cs" />

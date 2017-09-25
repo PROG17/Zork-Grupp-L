@@ -6,21 +6,29 @@ namespace Zork_Grupp_L.GameFunctions
 	public abstract class Inventory : NamedObject
     {
         private readonly HashSet<InventoryItem> items;
+        /*Skapade ny lista för FurnishingItems, tänker att eftersom man inte kan plocka upp dom osv. 
+        //så kanske det är bäst att ha det separat?*/
+        private readonly HashSet<FurnishingItem> furnishingItems;
 
         protected Inventory()
         {
             this.items = new HashSet<InventoryItem>();
+            this.furnishingItems = new HashSet<FurnishingItem>();
         }
 
         protected Inventory(params InventoryItem[] items)
         {
             this.items = new HashSet<InventoryItem>(items);
         }
-
-		/// <summary>
-		/// Gets the number of items in this inventory.
-		/// </summary>
-	    public int InventoryItemsCount => this.items.Count;
+    
+        protected Inventory(params FurnishingItem[] furnishingItems)
+        {
+            this.furnishingItems = new HashSet<FurnishingItem>(furnishingItems);
+        }
+        /// <summary>
+        /// Gets the number of items in this inventory.
+        /// </summary>
+        public int InventoryItemsCount => this.items.Count;
 
 		/// <summary>
 		/// Gives true if there's no items in this inventory.
@@ -40,7 +48,15 @@ namespace Zork_Grupp_L.GameFunctions
 	        item.OnAddedToInventory(this);
 	        return true;
         }
+        public bool AddToFurnishingInventory(FurnishingItem furnishingItems)
+        {
+            if (furnishingItems == null) return false;
 
+            if (!this.furnishingItems.Add(furnishingItems)) return false;
+
+            furnishingItems.OnAddedToInventory(this);
+            return true;
+        }
         /// <summary>
         /// Returns true if this inventory contain <paramref Name="item"/>.
         /// </summary>

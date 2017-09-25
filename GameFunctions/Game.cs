@@ -32,6 +32,7 @@ namespace Zork_Grupp_L
 			startRoom.AddToInventory(new ItemFrockCoat());
 			startRoom.AddToInventory(new ItemCylinderHat());
 			startRoom.AddToInventory(new ItemTorch());
+            startRoom.AddToFurnishingInventory(new ItemPuddle());
 			CurrentPlayer = new Player();
 			CurrentRoom = startRoom;
 			CurrentRoom.PrintRoomDescription();
