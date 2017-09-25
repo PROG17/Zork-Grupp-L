@@ -1,8 +1,8 @@
-﻿namespace Zork_Grupp_L.Items
+﻿namespace Zork_Grupp_L.Items.Dungeon
 {
-    public class ItemPuddle : FurnishingItem
+    public class FurnishPuddle : FurnishingItem
     {   //Nytt item för furnishing objects.
-        public ItemPuddle()
+        public FurnishPuddle()
         {
             this.Name = "puddle";
             this.Description = "You can use this puddle as a mirror.";

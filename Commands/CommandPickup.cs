@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L.Commands
 {
@@ -19,10 +20,18 @@ namespace Zork_Grupp_L.Commands
 			{
 				string whatToPickup = g_what.Value;
 
-				if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out InventoryItem item))
+				if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out BaseItem item))
 				{
-					Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
-					Console.WriteLine("You picked up the {0}.", item.Name);
+					if (item is InventoryItem)
+					{
+						Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
+						Console.WriteLine("You picked up the {0}.", item.Name);
+					}
+					else
+					{
+						Console.ForegroundColor = Colors.ErrorColor;
+						Console.WriteLine("You cannot pick up {0}. Sorry.", item.PrefixedName);
+					}
 				}
 				else if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out item))
 				{

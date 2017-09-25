@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L.Commands
 {
@@ -19,7 +20,7 @@ namespace Zork_Grupp_L.Commands
 			{
 				string whatToPickup = g_what.Value;
 
-				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out InventoryItem item))
+				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out BaseItem item))
 				{
 					Game.CurrentPlayer.InventoryTransferItem(item, Game.CurrentRoom);
 					Console.WriteLine("You dropped up the {0}.", item.Name);
@@ -32,7 +33,7 @@ namespace Zork_Grupp_L.Commands
 				else
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					Console.WriteLine("Don't know what you mean with {0}...", whatToPickup);
+					Console.WriteLine("You can't see any '{0}' nearby...", whatToPickup);
 				}
 			}
 			else

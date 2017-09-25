@@ -1,30 +1,23 @@
 ﻿using System.Collections.Generic;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L.GameFunctions
 {
 	public abstract class Inventory : NamedObject
     {
-        private readonly HashSet<InventoryItem> items;
-        /*Skapade ny lista för FurnishingItems, tänker att eftersom man inte kan plocka upp dom osv. 
-        //så kanske det är bäst att ha det separat?*/
-        private readonly HashSet<FurnishingItem> furnishingItems;
+        private readonly HashSet<BaseItem> items;
 
         protected Inventory()
         {
-            this.items = new HashSet<InventoryItem>();
-            this.furnishingItems = new HashSet<FurnishingItem>();
+            this.items = new HashSet<BaseItem>();
         }
 
-        protected Inventory(params InventoryItem[] items)
+        protected Inventory(params BaseItem[] items)
         {
-            this.items = new HashSet<InventoryItem>(items);
+            this.items = new HashSet<BaseItem>(items);
         }
     
-        protected Inventory(params FurnishingItem[] furnishingItems)
-        {
-            this.furnishingItems = new HashSet<FurnishingItem>(furnishingItems);
-        }
         /// <summary>
         /// Gets the number of items in this inventory.
         /// </summary>
@@ -39,7 +32,7 @@ namespace Zork_Grupp_L.GameFunctions
         /// AddToInventory an item to this inventory. Returns true on success.
         /// Fails if item already exists in this inventory.
         /// </summary>
-        public bool AddToInventory(InventoryItem item)
+        public bool AddToInventory(BaseItem item)
         {
             if (item == null) return false;
 
@@ -48,19 +41,11 @@ namespace Zork_Grupp_L.GameFunctions
 	        item.OnAddedToInventory(this);
 	        return true;
         }
-        public bool AddToFurnishingInventory(FurnishingItem furnishingItems)
-        {
-            if (furnishingItems == null) return false;
 
-            if (!this.furnishingItems.Add(furnishingItems)) return false;
-
-            furnishingItems.OnAddedToInventory(this);
-            return true;
-        }
         /// <summary>
         /// Returns true if this inventory contain <paramref Name="item"/>.
         /// </summary>
-        public bool ContainsInInventory(InventoryItem item)
+        public bool ContainsInInventory(BaseItem item)
         {
             if (item == null) return false;
 
@@ -85,7 +70,7 @@ namespace Zork_Grupp_L.GameFunctions
 		{
 			var itemNames = new List<string>(this.InventoryItemsCount);
 
-			foreach (InventoryItem inventoryItem in this.items)
+			foreach (BaseItem inventoryItem in this.items)
 			{
 				itemNames.Add(addPrefix ? inventoryItem.PrefixedName : inventoryItem.Name);
 			}
@@ -97,7 +82,7 @@ namespace Zork_Grupp_L.GameFunctions
 		/// Removes an item from this inventory. Returns true on success.
 		/// Fails if item doens't exist in this inventory.
 		/// </summary>
-		public bool InventoryRemoveItem(InventoryItem item)
+		public bool InventoryRemoveItem(BaseItem item)
         {
             if (item == null) return false;
 
@@ -108,7 +93,7 @@ namespace Zork_Grupp_L.GameFunctions
         /// Takes <paramref Name="item"/> from an inventory, removing it in the process.
         /// Returns null if inventory does not contain <paramref Name="item"/>.
         /// </summary>
-        public InventoryItem InventoryTakeItem(InventoryItem item)
+        public BaseItem InventoryTakeItem(BaseItem item)
         {
             if (item == null) return null;
             if (!this.ContainsInInventory(item)) return null;
@@ -121,7 +106,7 @@ namespace Zork_Grupp_L.GameFunctions
         /// Transfer <paramref Name="item"/> from this inventory to another.
         /// Returns true on success.
         /// </summary>
-        public bool InventoryTransferItem(InventoryItem item, Inventory target)
+        public bool InventoryTransferItem(BaseItem item, Inventory target)
         {
             if (target == null) return false;
             if (item == null) return false;
@@ -136,11 +121,11 @@ namespace Zork_Grupp_L.GameFunctions
 		/// <summary>
 		/// Try find an item in the inventory. Returns null if not found.
 		/// </summary>
-	    public InventoryItem InventoryFindItem(string needle)
+	    public BaseItem InventoryFindItem(string needle)
 	    {
 		    if (needle == null) return null;
 			
-			foreach (InventoryItem inventoryItem in this.items)
+			foreach (BaseItem inventoryItem in this.items)
 			{
 				if (StringHelper.KindaEquals(needle, inventoryItem.Name))
 					return inventoryItem;
@@ -152,7 +137,7 @@ namespace Zork_Grupp_L.GameFunctions
 	    /// <summary>
 	    /// Try find an item in the inventory. Returns false if not found.
 	    /// </summary>
-		public bool InventoryFindItem(string needle, out InventoryItem item)
+		public bool InventoryFindItem(string needle, out BaseItem item)
 	    {
 		    item = InventoryFindItem(needle);
 		    return item != null;

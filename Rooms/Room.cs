@@ -9,8 +9,15 @@ namespace Zork_Grupp_L.Rooms
         public void PrintRoomDescription()
         {
 	        Console.ForegroundColor = Colors.DefaultColor;
-            Console.WriteLine("You look around the {0}. {1}", this.Name, this.Description);
-			this.PrintRoomInventory();
+	        if (Game.CurrentRoom == this)
+	        {
+		        Console.WriteLine("You are in the {0}. {1}", this.Name, this.Description);
+		        this.PrintRoomInventory();
+			}
+	        else
+	        {
+		        Console.WriteLine("You look around the {0}. {1}", this.Name, this.Description);
+	        }
         }
 
 	    public void PrintRoomInventory()
