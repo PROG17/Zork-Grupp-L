@@ -39,22 +39,7 @@ namespace Zork_Grupp_L.Helpers
 
 		public static void WriteLineWrap(object arg)
 		{
-			if (arg == null)
-			{
-				Console.WriteLine();
-				return;
-			}
-
-			string[] words = arg.ToString().Split(' ');
-
-			foreach (string word in words)
-			{
-				int wordLen = word.Length;
-				if (Console.CursorLeft + wordLen > Console.WindowWidth)
-					Console.WriteLine();
-
-				Console.Write(word + ' ');
-			}
+			WriteWrap(arg);
 
 			Console.WriteLine();
 		}

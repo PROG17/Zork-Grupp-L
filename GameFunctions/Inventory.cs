@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Zork_Grupp_L.Helpers;
 using Zork_Grupp_L.Items;
 
@@ -86,7 +87,10 @@ namespace Zork_Grupp_L.GameFunctions
         {
             if (item == null) return false;
 
-            return this.items.Remove(item);
+	        if (!this.items.Remove(item)) return false;
+
+			item.OnRemovedFromInventory();
+			return true;
         }
 
         /// <summary>
@@ -121,26 +125,52 @@ namespace Zork_Grupp_L.GameFunctions
 		/// <summary>
 		/// Try find an item in the inventory. Returns null if not found.
 		/// </summary>
-	    public BaseItem InventoryFindItem(string needle)
-	    {
-		    if (needle == null) return null;
-			
+		public BaseItem InventoryFindItem(string needle)
+		{
+			if (needle == null) return null;
+
 			foreach (BaseItem inventoryItem in this.items)
 			{
 				if (StringHelper.KindaEquals(needle, inventoryItem.Name))
 					return inventoryItem;
 			}
 
+			return null;
+		}
+
+	    /// <summary>
+	    /// Try find an item in the inventory. Returns null if not found.
+	    /// </summary>
+	    public BaseItem InventoryFindItem(Predicate<BaseItem> match)
+	    {
+		    if (match == null) return null;
+
+		    foreach (BaseItem inventoryItem in this.items)
+		    {
+			    if (match(inventoryItem))
+				    return inventoryItem;
+		    }
+
 		    return null;
 	    }
 
-	    /// <summary>
-	    /// Try find an item in the inventory. Returns false if not found.
-	    /// </summary>
+		/// <summary>
+		/// Try find an item in the inventory. Returns false if not found.
+		/// </summary>
 		public bool InventoryFindItem(string needle, out BaseItem item)
 	    {
 		    item = InventoryFindItem(needle);
 		    return item != null;
 	    }
+
+	    /// <summary>
+	    /// Try find an item in the inventory. Returns false if not found.
+	    /// </summary>
+		public bool InventoryFindItem(Predicate<BaseItem> match, out BaseItem item)
+	    {
+		    item = InventoryFindItem(match);
+		    return item != null;
+	    }
+
     }
 }

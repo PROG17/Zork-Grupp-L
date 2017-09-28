@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L.Commands
 {
@@ -57,7 +58,7 @@ namespace Zork_Grupp_L.Commands
 					}
 					else
 					{
-						if (Game.CurrentRoom.InventoryFindItem(whatToInspect, out var item)
+						if (Game.CurrentRoom.InventoryFindItem(whatToInspect, out BaseItem item)
 						    || Game.CurrentPlayer.InventoryFindItem(whatToInspect, out item))
 						{
 							item.PrintItemDescription();

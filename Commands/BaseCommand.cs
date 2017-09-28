@@ -5,7 +5,10 @@ namespace Zork_Grupp_L.Commands
 {
 	public abstract class BaseCommand
 	{
-		protected const string P_THE = @"($| +| +the( +|$))";
+		protected const string P_NONE = @"(?: +|$)";
+		protected const string P_THE = @"(?: +the(?: +|$)|$| +)";
+		protected const string P_THROUGH = @"(?: +through(?: +|$)|$| +)";
+		protected const string P_THROUGHTHE = @"(?: +through" + P_THE + "|$| +)";
 
 		public abstract string[] Syntax { get; }
 

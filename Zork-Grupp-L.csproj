@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\CommandEnter.cs" />
+    <Compile Include="Commands\CommandExit.cs" />
     <Compile Include="Commands\CommandInspect.cs" />
     <Compile Include="Commands\CommandDrop.cs" />
     <Compile Include="Commands\CommandPickup.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Items\BaseItem.cs" />
     <Compile Include="Items\Dungeon\FurnishChair.cs" />
     <Compile Include="Items\Dungeon\FurnishPuddle.cs" />
+    <Compile Include="Items\RoomExit.cs" />
     <Compile Include="Items\FurnishingItem.cs" />
     <Compile Include="GameFunctions\Game.cs" />
     <Compile Include="Items\Dungeon\ItemCylinderHat.cs" />
@@ -66,6 +69,8 @@
     <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rooms\RoomRepository.cs" />
+    <Compile Include="Rooms\Corridor.cs" />
     <Compile Include="Rooms\Dungeon.cs" />
     <Compile Include="Rooms\Room.cs" />
   </ItemGroup>

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L
 {
-	using Items;
 	using Rooms;
 	using Commands;
 
@@ -15,22 +11,26 @@ namespace Zork_Grupp_L
 	{
 		public static Player CurrentPlayer { get; private set; }
 		public static Room CurrentRoom { get; private set; }
+		public static RoomRepository AllRooms { get; private set; }
 
 		private static readonly BaseCommand[] commands = {
 			new CommandInspect(),
 			new CommandPickup(),
 			new CommandDrop(),
+			new CommandExit(),
+			new CommandEnter(),
 		};
 
 		public static void StartGame()
 		{
+			AllRooms = new RoomRepository();
+
 			Console.ForegroundColor = Colors.ImportantColor;
 			Console.WriteLine("Welcome to our game, let's play!");
 			Console.ForegroundColor = Colors.DefaultColor;
-
-			var startRoom = new Dungeon();
+			
 			CurrentPlayer = new Player();
-			CurrentRoom = startRoom;
+			GoToRoom(AllRooms.dungeon);
 			CurrentRoom.PrintRoomDescription();
 
 			while (true)
@@ -73,6 +73,13 @@ namespace Zork_Grupp_L
 				}
 			}
 
+		}
+
+		public static void GoToRoom(Room nextRoom)
+		{
+			CurrentRoom?.OnExitRoom();
+			CurrentRoom = nextRoom;
+			nextRoom.OnEnterRoom();
 		}
 	}
 }

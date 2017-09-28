@@ -22,8 +22,8 @@ namespace Zork_Grupp_L.Commands
 
 				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out BaseItem item))
 				{
+					ConsoleHelper.WriteLineWrap("You dropped the {0}.", item.Name);
 					Game.CurrentPlayer.InventoryTransferItem(item, Game.CurrentRoom);
-					ConsoleHelper.WriteLineWrap("You dropped up the {0}.", item.Name);
 				}
 				else if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out item))
 				{

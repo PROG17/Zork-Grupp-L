@@ -33,11 +33,12 @@ namespace Zork_Grupp_L.Helpers
 			for (int i = 0; i < length; i++)
 			{
 				string word = words[i];
+				if (word == null) continue;
 				if (word.Length == 0) continue;
 				
 				sb.Append(word);
 
-				if (i >= length - 1) continue;
+				if (i == length - 1) continue;
 
 				if (i == length - 2)
 					sb.Append(length == 2 ? seperatorIf2 : lastSeperator);

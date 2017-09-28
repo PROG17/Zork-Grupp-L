@@ -24,8 +24,8 @@ namespace Zork_Grupp_L.Commands
 				{
 					if (item is InventoryItem)
 					{
-						Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
 						ConsoleHelper.WriteLineWrap("You picked up the {0}.", item.Name);
+						Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
 					}
 					else
 					{
