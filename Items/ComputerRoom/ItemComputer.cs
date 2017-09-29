@@ -10,8 +10,9 @@ namespace Zork_Grupp_L.Items.ComputerRoom
     {       
             public ItemComputer()
             {
-                this.Name = "computer";
-                this.Description = "This computer seems to be running on windows vista";
+                this.Name = "laptop";
+                this.Description = "This computer seems to be running on windows vista. " +
+                "It also seems to be running low on battery.";
             }
 
             public override string Name { get; }

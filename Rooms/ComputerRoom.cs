@@ -14,6 +14,7 @@ namespace Zork_Grupp_L.Rooms
             this.Name = "Computer Room";
             this.Description = "A room with old computers.";
             this.AddToInventory(new ItemComputer());
+            this.AddToInventory(new FurnishComputer());
         }
 
 

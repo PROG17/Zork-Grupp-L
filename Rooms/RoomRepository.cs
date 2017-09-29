@@ -7,6 +7,7 @@ namespace Zork_Grupp_L.Rooms
 		public Dungeon dungeon = new Dungeon();
 		public Corridor corridor = new Corridor();
         public ComputerRoom computerRoom = new ComputerRoom();
+        public Classroom classroom = new Classroom();
 
 		public RoomRepository()
 		{
@@ -18,8 +19,11 @@ namespace Zork_Grupp_L.Rooms
 				name: "dungeon door",
 				description: "This door seems to lead to that hideous dungeon you came from.");
             corridor.AddRoomExit(computerRoom,
-                name: "Door to the computer room",
-                description: "This door seems to lead to a room of computers");
+                name: "computer room door",
+                description: "This door seems to lead to a room of computers.");
+            corridor.AddRoomExit(classroom,
+                name: "classroom door",
+                description: "This door seems to lead to a lovely classroom.");
                 
 		}
 	}

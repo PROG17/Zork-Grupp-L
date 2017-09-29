@@ -55,6 +55,8 @@
     <Compile Include="Helpers\ConsoleHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Items\BaseItem.cs" />
+    <Compile Include="Items\Classroom\ItemCharger.cs" />
+    <Compile Include="Items\ComputerRoom\FurnishComputer.cs" />
     <Compile Include="Items\ComputerRoom\ItemComputer.cs" />
     <Compile Include="Items\Dungeon\FurnishChair.cs" />
     <Compile Include="Items\Dungeon\FurnishPuddle.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rooms\Classroom.cs" />
     <Compile Include="Rooms\ComputerRoom.cs" />
     <Compile Include="Rooms\RoomRepository.cs" />
     <Compile Include="Rooms\Corridor.cs" />
