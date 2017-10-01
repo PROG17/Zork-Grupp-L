@@ -41,7 +41,7 @@ namespace Zork_Grupp_L
 	    public override string Name { get; }
 	    public override string Description { get; } = null;
 
-        public bool IsNaked => !this.InventoryFindItem("Frock coat");
+        public bool IsNaked => !this.InventoryFindItem("Frock coat") && !this.InventoryFindItem("cylinder hat");
 
 	    public void PrintPlayerDescription()
 	    {

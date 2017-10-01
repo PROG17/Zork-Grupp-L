@@ -25,6 +25,7 @@ namespace Zork_Grupp_L.Items.Dungeon
 		public override void OnRemovedFromInventory()
 		{
 			base.OnRemovedFromInventory();
+            
 
 			ConsoleHelper.WriteLineWrap("You feel the chills approaching. You've no clothes on, you're naked!" +
 			                            " Better pick up that coat again.");

@@ -10,7 +10,7 @@ namespace Zork_Grupp_L
 	{
 		static void Main(string[] args)
 		{
-            Game.StartGame();
+            Game.StartGame();           
             Console.ReadKey();
 
 		}

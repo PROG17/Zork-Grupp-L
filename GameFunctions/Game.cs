@@ -12,7 +12,8 @@ namespace Zork_Grupp_L
 		public static Player CurrentPlayer { get; private set; }
 		public static Room CurrentRoom { get; private set; }
 		public static RoomRepository AllRooms { get; private set; }
-
+        public static bool GameOver { get; private set; }
+        
 		private static readonly BaseCommand[] commands = {
 			new CommandInspect(),
 			new CommandPickup(),
@@ -23,6 +24,7 @@ namespace Zork_Grupp_L
 
 		public static void StartGame()
 		{
+            GameOver = false;
 			AllRooms = new RoomRepository();
 
 			Console.ForegroundColor = Colors.ImportantColor;
@@ -32,12 +34,17 @@ namespace Zork_Grupp_L
 			CurrentPlayer = new Player();
 			GoToRoom(AllRooms.dungeon);
 			CurrentRoom.PrintRoomDescription();
-
+            
 			while (true)
 			{
 				UserInput();
 			}
 		}
+
+        public static void EndGame()
+        {
+            GameOver = true;          
+        }
 
 		public static void UserInput()
 		{
@@ -80,6 +87,10 @@ namespace Zork_Grupp_L
 			CurrentRoom?.OnExitRoom();
 			CurrentRoom = nextRoom;
 			nextRoom.OnEnterRoom();
+            if (CurrentRoom == AllRooms.corridor)
+            {
+                AllRooms.corridor.IfUserCarriesUnauthorizedItems();
+            }
 		}
 	}
 }

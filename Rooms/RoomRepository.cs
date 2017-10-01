@@ -32,7 +32,7 @@ namespace Zork_Grupp_L.Rooms
 		    classroom.AddRoomExit(corridor,
 		        name: "corridoor(tm)",
 		        description: "This door seems to lead to a corridor.");
-
+         
         }
 	}
 }
