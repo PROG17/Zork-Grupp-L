@@ -39,44 +39,69 @@ namespace Zork_Grupp_L.GameFunctions
 
 	        if (!this.items.Add(item)) return false;
 
-	        item.OnAddedToInventory(this);
+			item.SetCurrentInventory(this);
 	        return true;
         }
 
         /// <summary>
-        /// Returns true if this inventory contain <paramref Name="item"/>.
+        /// Returns true if this inventory contains the item.
         /// </summary>
-        public bool ContainsInInventory(BaseItem item)
+        public bool InventoryContains(BaseItem item)
         {
             if (item == null) return false;
 
             return this.items.Contains(item);
         }
 
-        /// <summary>
-        /// Returns a comma seperated list of the items in this inventory.
-        /// </summary>
-        public string InventoryListNames(bool addPrefix = true)
+	    /// <summary>
+	    /// Returns true if this inventory contains an item where its name matches the <paramref name="needle"/> using <see cref="StringHelper.KindaEquals"/>.
+	    /// </summary>
+	    public bool InventoryContains(string needle)
+	    {
+		    foreach (BaseItem inventoryItem in this.items)
+		    {
+			    if (StringHelper.KindaEquals(inventoryItem.Name, needle))
+				    return true;
+		    }
+		    return false;
+	    }
+
+		/// <summary>
+		/// Returns true if this inventory contains an item of said type.
+		/// </summary>
+		public bool InventoryContains<ItemType>() where ItemType : BaseItem
+	    {
+		    foreach (BaseItem inventoryItem in this.items)
+		    {
+			    if (inventoryItem is ItemType)
+				    return true;
+		    }
+		    return false;
+	    }
+
+	    /// <summary>
+	    /// Returns true if this inventory contains an item of said type
+	    /// and its name matches the <paramref name="needle"/> using <see cref="StringHelper.KindaEquals"/>.
+	    /// </summary>
+	    public bool InventoryContains<ItemType>(string needle) where ItemType : BaseItem
+	    {
+		    foreach (BaseItem inventoryItem in this.items)
+		    {
+			    if (inventoryItem is ItemType && StringHelper.KindaEquals(inventoryItem.Name, needle))
+				    return true;
+		    }
+		    return false;
+	    }
+
+		/// <summary>
+		/// Returns a comma seperated list of the items in this inventory.
+		/// </summary>
+		public string InventoryListNames(bool addPrefix = true)
 		{
 			if (this.items.Count == 0) return null;
 
-			string[] itemNames = this.InventoryGetNames(addPrefix);
-			return StringHelper.Join(itemNames);
-		}
-
-		/// <summary>
-		/// Returns an array of all the items names in this inventory.
-		/// </summary>
-		public string[] InventoryGetNames(bool addPrefix = false)
-		{
-			var itemNames = new List<string>(this.InventoryItemsCount);
-
-			foreach (BaseItem inventoryItem in this.items)
-			{
-				itemNames.Add(addPrefix ? inventoryItem.PrefixedName : inventoryItem.Name);
-			}
-
-			return itemNames.ToArray();
+			string[] itemNames = addPrefix ? items.GetPrefixedNames() : items.GetNames();
+			return itemNames.Join();
 		}
 
 		/// <summary>
@@ -89,7 +114,7 @@ namespace Zork_Grupp_L.GameFunctions
 
 	        if (!this.items.Remove(item)) return false;
 
-			item.OnRemovedFromInventory();
+	        item.SetCurrentInventory(null);
 			return true;
         }
 
@@ -100,7 +125,7 @@ namespace Zork_Grupp_L.GameFunctions
         public BaseItem InventoryTakeItem(BaseItem item)
         {
             if (item == null) return null;
-            if (!this.ContainsInInventory(item)) return null;
+            if (!this.InventoryContains(item)) return null;
 
             this.InventoryRemoveItem(item);
             return item;
@@ -114,7 +139,7 @@ namespace Zork_Grupp_L.GameFunctions
         {
             if (target == null) return false;
             if (item == null) return false;
-            if (!this.ContainsInInventory(item)) return false;
+            if (!this.InventoryContains(item)) return false;
 
             this.InventoryRemoveItem(item);
             target.AddToInventory(item);
@@ -123,54 +148,99 @@ namespace Zork_Grupp_L.GameFunctions
         }
 
 		/// <summary>
-		/// Try find an item in the inventory. Returns null if not found.
+		/// Try find an item in the inventory. Returns list of all matching items. Returns empty list if none.
 		/// </summary>
-		public BaseItem InventoryFindItem(string needle)
+		public List<BaseItem> InventoryFindItems(string needle)
 		{
-			if (needle == null) return null;
-
-			foreach (BaseItem inventoryItem in this.items)
-			{
-				if (StringHelper.KindaEquals(needle, inventoryItem.Name))
-					return inventoryItem;
-			}
-
-			return null;
+			return InventoryFindItems<BaseItem>(match: i => StringHelper.KindaEquals(needle, i.Name));
 		}
 
-	    /// <summary>
-	    /// Try find an item in the inventory. Returns null if not found.
-	    /// </summary>
-	    public BaseItem InventoryFindItem(Predicate<BaseItem> match)
+		/// <summary>
+		/// Try find an item in the inventory. Returns list of all matching items. Returns empty list if none.
+		/// </summary>
+		public List<BaseItem> InventoryFindItems(Predicate<BaseItem> match)
 	    {
-		    if (match == null) return null;
+		    return InventoryFindItems<BaseItem>(match: match);
+	    }
 
-		    foreach (BaseItem inventoryItem in this.items)
-		    {
-			    if (match(inventoryItem))
-				    return inventoryItem;
-		    }
+	    /// <summary>
+	    /// Try find an item type in the inventory. Returns list of all matching items. Returns empty list if none.
+	    /// </summary>
+	    public List<ItemType> InventoryFindItems<ItemType>() where ItemType : BaseItem
+	    {
+		    return InventoryFindItems<ItemType>(match: i => true);
+	    }
 
-		    return null;
+	    /// <summary>
+	    /// Try find an item type in the inventory. Returns list of all matching items. Returns empty list if none.
+	    /// </summary>
+	    public List<ItemType> InventoryFindItems<ItemType>(string needle) where ItemType : BaseItem
+	    {
+		    return InventoryFindItems<ItemType>(match: i => StringHelper.KindaEquals(needle, i.Name));
 	    }
 
 		/// <summary>
-		/// Try find an item in the inventory. Returns false if not found.
+		/// Try find an item by its type and a predicate in the inventory. Returns list of all matching items. Returns empty list if none.
 		/// </summary>
-		public bool InventoryFindItem(string needle, out BaseItem item)
+		public List<ItemType> InventoryFindItems<ItemType>(Predicate<ItemType> match) where ItemType : BaseItem
 	    {
-		    item = InventoryFindItem(needle);
+		    var itemMatches = new List<ItemType>();
+		    if (match == null) return itemMatches;
+
+			foreach (BaseItem inventoryItem in this.items)
+		    {
+			    if (inventoryItem is ItemType i && match(i))
+				    itemMatches.Add(i);
+		    }
+
+		    return itemMatches;
+	    }
+
+		/// <summary>
+		/// Try find an item in the inventory. Gives null if not a clear match.
+		/// </summary>
+		public bool InventoryTryFindItem(string needle, out BaseItem item)
+	    {
+		    List<BaseItem> items = InventoryFindItems(needle);
+
+		    item = items.Count == 1 ? items[0] : null;
 		    return item != null;
 	    }
 
-	    /// <summary>
-	    /// Try find an item in the inventory. Returns false if not found.
-	    /// </summary>
-		public bool InventoryFindItem(Predicate<BaseItem> match, out BaseItem item)
+		/// <summary>
+		/// Try find an item in the inventory. Gives null if not a clear match.
+		/// </summary>
+		public bool InventoryTryFindItem(Predicate<BaseItem> match, out BaseItem item)
+		{
+			List<BaseItem> items = InventoryFindItems(match);
+
+			item = items.Count == 1 ? items[0] : null;
+			return item != null;
+		}
+
+	    public bool InventoryTryFindItem<ItemType>(out ItemType item) where ItemType : BaseItem
 	    {
-		    item = InventoryFindItem(match);
+		    List<ItemType> items = InventoryFindItems<ItemType>();
+
+		    item = items.Count == 1 ? items[0] : null;
 		    return item != null;
 	    }
 
-    }
+	    public bool InventoryTryFindItem<ItemType>(Predicate<ItemType> match, out ItemType item) where ItemType : BaseItem
+	    {
+		    List<ItemType> items = InventoryFindItems<ItemType>(match);
+
+		    item = items.Count == 1 ? items[0] : null;
+		    return item != null;
+	    }
+
+	    public bool InventoryTryFindItem<ItemType>(string needle, out ItemType item) where ItemType : BaseItem
+	    {
+		    List<ItemType> items = InventoryFindItems<ItemType>(needle);
+
+		    item = items.Count == 1 ? items[0] : null;
+		    return item != null;
+	    }
+
+	}
 }

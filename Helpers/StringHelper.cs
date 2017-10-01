@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,9 +25,9 @@ namespace Zork_Grupp_L.Helpers
 			return false;
 		}
 
-		public static string Join(string[] words, string seperator = ", ", string lastSeperator = ", and ", string seperatorIf2 = " and ")
+		public static string Join(this IList<string> words, string seperator = ", ", string lastSeperator = ", and ", string seperatorIf2 = " and ")
 		{
-			int length = words.Length;
+			int length = words.Count;
 			if (length == 1) return words[0];
 
 			var sb = new StringBuilder();

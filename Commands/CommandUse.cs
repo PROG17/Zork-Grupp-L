@@ -19,55 +19,45 @@ namespace Zork_Grupp_L.Commands
 
         public override void Execute(Match match, string pattern)
         {
-            Group g_cmd = match.Groups["cmd"];
             Group g_what1 = match.Groups["what1"];
             Group g_what2 = match.Groups["what2"];
 
-            if (g_what1.Success && g_what2.Success)
-            {
-                string whatToUse1 = g_what1.Value;
-                string whatToUse2 = g_what2.Value;
+	        if (g_what1.Success && g_what2.Success)
+	        {
+		        string whatToUse1 = g_what1.Value;
+		        string whatToUse2 = g_what2.Value;
 
-                if (Game.CurrentPlayer.InventoryFindItem(whatToUse1, out BaseItem item1)
-                    && Game.CurrentPlayer.InventoryFindItem(whatToUse2, out BaseItem item2))
-                {
-                    if (item1 is InventoryItem && item2 is InventoryItem)
-                    {
-                        ConsoleHelper.WriteLineWrap("You used {0} on {1}", item1.Name, item2.Name);
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = Colors.ErrorColor;
-                        ConsoleHelper.WriteLineWrap(
-                            "You cannot use {0} on {1}",
-                            item1.PrefixedName,
-                            item2.PrefixedName);
-                    }
-                }
-                else if (Game.CurrentPlayer.InventoryFindItem(whatToUse1, out BaseItem item11)
-                         && Game.CurrentRoom.InventoryFindItem(whatToUse2, out BaseItem item22))
-                {
-                    if (item11 is InventoryItem && item22 is InventoryItem)
-                    {
-                        ConsoleHelper.WriteLineWrap("You used {0} on {1}", item11.Name, item22.Name);
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = Colors.ErrorColor;
-                        ConsoleHelper.WriteLineWrap(
-                            "You cannot use {0} on {1}",
-                            item11.PrefixedName,
-                            item22.PrefixedName);
-                    }
-                }
-                else
-                {
-                    string cmd = g_cmd.Value.ToLower().ToFirstUpper();
-
-                    Console.ForegroundColor = Colors.ErrorColor;
-                    ConsoleHelper.WriteLineWrap("{0} what?", cmd);
-                }
-            }
+		        if (TryFindItem(whatToUse1, out BaseItem item1)
+		            && TryFindItem(whatToUse2, out BaseItem item2))
+		        {
+			        if (item1 is InventoryItem && item2 is InventoryItem)
+			        {
+				        ConsoleHelper.WriteLineWrap("You used {0} on {1}", item1.Name, item2.Name);
+			        }
+			        else
+			        {
+				        Console.ForegroundColor = Colors.ErrorColor;
+				        ConsoleHelper.WriteLineWrap(
+					        "You cannot use {0} on {1}",
+					        item1.PrefixedName,
+					        item2.PrefixedName);
+			        }
+		        }
+	        }
+	        else if (g_what1.Success)
+	        {
+		        string whatToUse1 = g_what1.Value;
+		        if (TryFindItem(whatToUse1, out BaseItem item1))
+		        {
+					Console.ForegroundColor = Colors.ErrorColor;
+					ConsoleHelper.WriteLineWrap("Use the {0} on what?", item1.Name);
+		        }
+			}
+			else
+	        {
+		        Console.ForegroundColor = Colors.ErrorColor;
+		        ConsoleHelper.WriteLineWrap("Use what?");
+	        }
         }
     }
 }

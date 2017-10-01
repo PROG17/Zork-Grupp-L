@@ -56,18 +56,9 @@ namespace Zork_Grupp_L.Commands
 						Game.CurrentRoom.PrintRoomInventory();
 						Game.CurrentPlayer.PrintPlayerInventory();
 					}
-					else
-					{
-						if (Game.CurrentRoom.InventoryFindItem(whatToInspect, out BaseItem item)
-						    || Game.CurrentPlayer.InventoryFindItem(whatToInspect, out item))
-						{
-							item.PrintItemDescription();
-						}
-						else
-						{
-							Console.ForegroundColor = Colors.ErrorColor;
-							ConsoleHelper.WriteLineWrap("There's no {0} in the vicinity...", whatToInspect);
-						}
+					else if (TryFindItem(whatToInspect, out BaseItem item))
+					{ 
+						item.PrintItemDescription();
 					}
 				}
 				else

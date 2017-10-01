@@ -21,20 +21,25 @@ namespace Zork_Grupp_L.Items
 		/// </summary>
 		public Inventory CurrentInventory { get; private set; }
 
+		protected event Action<Inventory> AddedToInventory;
+		protected event Action<Inventory> RemovedFromInventory; 
+
 		public void PrintItemDescription()
 		{
 			Console.ForegroundColor = Colors.DefaultColor;
 			ConsoleHelper.WriteLineWrap("You take a closer look at the {0}. {1}", this.Name, this.Description);
 		}
 
-		public virtual void OnAddedToInventory(Inventory inventory)
+		internal void SetCurrentInventory(Inventory newInventory)
 		{
-			this.CurrentInventory = inventory;
-		}
+			Inventory oldInventory = this.CurrentInventory;
+			this.CurrentInventory = newInventory;
 
-		public virtual void OnRemovedFromInventory()
-		{
-			this.CurrentInventory = null;
+			if (newInventory != oldInventory && oldInventory != null)
+				RemovedFromInventory?.Invoke(oldInventory);
+
+			if (newInventory != oldInventory && newInventory != null)
+				AddedToInventory?.Invoke(newInventory);
 		}
 	}
 }

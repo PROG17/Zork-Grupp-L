@@ -54,6 +54,7 @@
     <Compile Include="Commands\CommandUse.cs" />
     <Compile Include="Helpers\Colors.cs" />
     <Compile Include="Helpers\ConsoleHelper.cs" />
+    <Compile Include="Helpers\NameHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Items\BaseItem.cs" />
     <Compile Include="Items\Classroom\ItemCharger.cs" />

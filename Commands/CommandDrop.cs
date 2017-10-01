@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
 using Zork_Grupp_L.Items;
@@ -20,20 +21,17 @@ namespace Zork_Grupp_L.Commands
 			{
 				string whatToPickup = g_what.Value;
 
-				if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out BaseItem item))
+				if (!TryFindItem(whatToPickup, out BaseItem item)) return;
+
+				if (item.CurrentInventory is Player)
 				{
 					ConsoleHelper.WriteLineWrap("You dropped the {0}.", item.Name);
 					Game.CurrentPlayer.InventoryTransferItem(item, Game.CurrentRoom);
 				}
-				else if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out item))
-				{
-					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("You aren't even carrying {0}, silly.", item.PrefixedName);
-				}
 				else
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("You can't see any '{0}' nearby...", whatToPickup);
+					ConsoleHelper.WriteLineWrap("You aren't even carrying {0}, silly.", item.PrefixedName);
 				}
 			}
 			else

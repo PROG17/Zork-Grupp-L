@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L.Commands
 {
@@ -29,6 +32,45 @@ namespace Zork_Grupp_L.Commands
 				}
 			}
 
+			return false;
+		}
+
+
+		public static List<BaseItem> FindItems(string nameMatch)
+		{
+			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(nameMatch);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems(nameMatch));
+			return items;
+		}
+
+		public static List<BaseItem> FindItems(Predicate<BaseItem> match)
+		{
+			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(match);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems(match));
+			return items;
+		}
+
+		public static bool TryFindItem(string nameMatch, out BaseItem item)
+		{
+			List<BaseItem> items = FindItems(nameMatch);
+
+			if (items.Count == 1)
+			{
+				item = items[0];
+				return true;
+			}
+			else if (items.Count > 1)
+			{
+				Console.ForegroundColor = Colors.ErrorColor;
+				ConsoleHelper.WriteLineWrap("Couldn't distinguish between the {0}.", items.GetNames().Join(", the ", ", or the ", " or the "));
+			}
+			else
+			{
+				Console.ForegroundColor = Colors.ErrorColor;
+				ConsoleHelper.WriteLineWrap("Can't see any '{0}', in the vicinity.", nameMatch);
+			}
+
+			item = null;
 			return false;
 		}
 	}

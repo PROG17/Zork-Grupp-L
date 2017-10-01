@@ -20,28 +20,26 @@ namespace Zork_Grupp_L.Commands
 			{
 				string whatToPickup = g_what.Value;
 
-				if (Game.CurrentRoom.InventoryFindItem(whatToPickup, out BaseItem item))
+				if (TryFindItem(whatToPickup, out BaseItem item))
 				{
 					if (item is InventoryItem)
 					{
-						ConsoleHelper.WriteLineWrap("You picked up the {0}.", item.Name);
-						Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
+						if (item.CurrentInventory is Player)
+						{
+							Console.ForegroundColor = Colors.ErrorColor;
+							ConsoleHelper.WriteLineWrap("You are already carrying {0}, dum dum.", item.PrefixedName);
+						}
+						else
+						{
+							ConsoleHelper.WriteLineWrap("You picked up the {0}.", item.Name);
+							Game.CurrentRoom.InventoryTransferItem(item, Game.CurrentPlayer);
+						}
 					}
 					else
 					{
 						Console.ForegroundColor = Colors.ErrorColor;
 						ConsoleHelper.WriteLineWrap("You cannot pick up {0}. Sorry.", item.PrefixedName);
 					}
-				}
-				else if (Game.CurrentPlayer.InventoryFindItem(whatToPickup, out item))
-				{
-					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("You are already carrying {0}, dum dum.", item.PrefixedName);
-				}
-				else
-				{
-					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("There's no {0} in the vicinity...", whatToPickup);
 				}
 			}
 			else

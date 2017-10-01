@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zork_Grupp_L.GameFunctions;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items.Dungeon;
 
 namespace Zork_Grupp_L
 {
@@ -41,7 +42,7 @@ namespace Zork_Grupp_L
 	    public override string Name { get; }
 	    public override string Description { get; } = null;
 
-        public bool IsNaked => !this.InventoryFindItem("Frock coat") || !this.InventoryFindItem("cylinder hat");
+        public bool IsNaked => !(this.InventoryContains("frock coat") && this.InventoryContains("cylinder hat"));
 
 	    public void PrintPlayerDescription()
 	    {

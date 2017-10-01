@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
 using Zork_Grupp_L.Items;
@@ -22,21 +24,40 @@ namespace Zork_Grupp_L.Commands
 				string whatToEnter = g_what.Value;
 
 				// The search algo
-				Predicate<BaseItem> search = i => 
-					i is RoomExit e && StringHelper.KindaEquals(e.NextRoom.Name, whatToEnter);
 
-				if (Game.CurrentRoom.InventoryFindItem(search, out BaseItem item))
+				List<RoomExit> exits = FindItems(i => i is RoomExit e && StringHelper.KindaEquals(e.NextRoom.Name, whatToEnter))
+					.Cast<RoomExit>().ToList();
+
+				if (exits.Count == 1)
 				{
-					var exit = (RoomExit) item;
+					RoomExit exit = exits[0];
 
 					ConsoleHelper.WriteLineWrap(
 						"You leave through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
 					Game.GoToRoom(exit.NextRoom);
 				}
+				else if (exits.Count > 1)
+				{
+					string joinedString = exits.Select(e=>e.NextRoom.Name).ToArray().Join(", ", ", or ", " or ");
+
+					Console.ForegroundColor = Colors.ErrorColor;
+					ConsoleHelper.WriteLineWrap("Couldn't distinguish between {0}.", joinedString);
+				}
 				else
 				{
-					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("You can't see any exits that goes to '{0}'", whatToEnter);
+					if (!TryFindItem(whatToEnter, out BaseItem item)) return;
+
+					if (item is RoomExit exit)
+					{
+						ConsoleHelper.WriteLineWrap(
+							"You go through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
+						Game.GoToRoom(exit.NextRoom);
+					}
+					else
+					{
+						Console.ForegroundColor = Colors.ErrorColor;
+						ConsoleHelper.WriteLineWrap("You can't exit through {0}, you scoot boot.", item.PrefixedName);
+					}
 				}
 			}
 			else

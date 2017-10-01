@@ -32,7 +32,7 @@ namespace Zork_Grupp_L.Rooms
                 Game.GameOver = true;
             }
 			//Om spelaren bär på en burning torch så ska spelet avslutas.
-            else if (Game.CurrentPlayer.InventoryFindItem("torch", out BaseItem item)
+            else if (Game.CurrentPlayer.InventoryTryFindItem("torch", out BaseItem item)
 				&& item is ItemTorch torch
 				&& torch.IsLit)
             {

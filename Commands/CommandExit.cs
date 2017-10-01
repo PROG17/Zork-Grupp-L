@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Zork_Grupp_L.Helpers;
 using Zork_Grupp_L.Items;
@@ -10,7 +11,7 @@ namespace Zork_Grupp_L.Commands
 		public override string[] Syntax { get; } =
 		{
 			$@"(?<cmd>go +through|go +out){P_THE}(?<what>.+)?",
-			$@"(?<cmd>leave|exit|enter){P_THROUGHTHE}(?<what>.+)?",
+			$@"(?<cmd>leave|exit){P_THROUGHTHE}(?<what>.+)?",
 		};
 
 		public override void Execute(Match match, string pattern)
@@ -22,29 +23,18 @@ namespace Zork_Grupp_L.Commands
 			{
 				string whatToFind = g_what.Value;
 
-				if (Game.CurrentRoom.InventoryFindItem(whatToFind, out BaseItem item))
+				if (!TryFindItem(whatToFind, out BaseItem item)) return;
+
+				if (item is RoomExit exit)
 				{
-					if (item is RoomExit exit)
-					{
-						ConsoleHelper.WriteLineWrap(
-							"You go through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
-						Game.GoToRoom(exit.NextRoom);
-					}
-					else
-					{
-						Console.ForegroundColor = Colors.ErrorColor;
-						ConsoleHelper.WriteLineWrap("You can't exit through {0}, you scoot boot.", item.PrefixedName);
-					}
-				}
-				else if (Game.CurrentPlayer.InventoryFindItem(whatToFind, out item))
-				{
-					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("You can't exit through {0}, you scoot boot.", item.PrefixedName);
+					ConsoleHelper.WriteLineWrap(
+						"You go through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
+					Game.GoToRoom(exit.NextRoom);
 				}
 				else
 				{
 					Console.ForegroundColor = Colors.ErrorColor;
-					ConsoleHelper.WriteLineWrap("Can't see any '{0}', in the vicinity.", whatToFind);
+					ConsoleHelper.WriteLineWrap("You can't exit through {0}, you scoot boot.", item.PrefixedName);
 				}
 			}
 			else
