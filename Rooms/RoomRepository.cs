@@ -24,7 +24,15 @@ namespace Zork_Grupp_L.Rooms
             corridor.AddRoomExit(classroom,
                 name: "classroom door",
                 description: "This door seems to lead to a lovely classroom.");
-                
-		}
+
+            computerRoom.AddRoomExit(corridor,
+                name: "corridoor(tm)",
+                description: "This door seems to lead to a corridor.");
+
+		    classroom.AddRoomExit(corridor,
+		        name: "corridoor(tm)",
+		        description: "This door seems to lead to a corridor.");
+
+        }
 	}
 }
