@@ -9,7 +9,7 @@ namespace Zork_Grupp_L.Commands
 	{
 		public override string[] Syntax { get; } =
 		{
-			$@"(?<cmd>go +through){P_NONE}(?<what>.+)?",
+			$@"(?<cmd>go +through|go +out){P_THE}(?<what>.+)?",
 			$@"(?<cmd>leave|exit|enter){P_THROUGHTHE}(?<what>.+)?",
 		};
 

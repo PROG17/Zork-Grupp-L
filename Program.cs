@@ -3,16 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-            Game.StartGame();           
-            Console.ReadKey();
+			do {
+				Game.RunGame();
+			} while (PromtRestart());
 
+			Console.ReadKey();
+		}
+
+		private static bool PromtRestart()
+		{
+			while (true)
+			{
+				Console.ForegroundColor = Colors.DefaultColor;
+				ConsoleHelper.WriteLineWrap("\nDo you wanna play again? Y/N");
+				Console.Write("> ");
+				Console.ForegroundColor = Colors.InputColor;
+
+				string menuInput = Console.ReadLine().Trim().ToLower();
+
+				if (menuInput == "y")
+				{
+					return true;
+				}
+				if (menuInput == "n")
+				{
+					return false;
+				}
+
+				Console.ForegroundColor = Colors.ErrorColor;
+				ConsoleHelper.WriteLineWrap("You have to type Y or N.");
+			}
 		}
 	}
 }

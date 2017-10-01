@@ -9,7 +9,7 @@ namespace Zork_Grupp_L.Commands
 	{
 		public override string[] Syntax { get; } =
 		{
-			$@"(?<cmd>go +to|enter){P_THE}(?<what>.+)?",
+			$@"(?<cmd>go *to|enter){P_THE}(?<what>.+)?",
 		};
 
 		public override void Execute(Match match, string pattern)
