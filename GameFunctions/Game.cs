@@ -44,7 +44,29 @@ namespace Zork_Grupp_L
 
         public static void EndGame()
         {
-            GameOver = true;          
+            GameOver = true;
+            do
+            {
+                Console.ForegroundColor = Colors.GameOverColor;
+                Console.WriteLine("Game Over!!");
+                Console.ForegroundColor = Colors.DefaultColor;
+                Console.WriteLine("\nDo you wanna play again? Y/N");
+                string menuInput = Console.ReadLine().ToLower();
+            
+                if (menuInput == "y")
+                {
+                    Console.Clear();
+                    StartGame();
+                }
+                else if (menuInput == "n")
+                {
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("You have to type Y or N.");
+                }
+            } while (GameOver);
         }
 
 		public static void UserInput()

@@ -20,7 +20,7 @@ namespace Zork_Grupp_L.Rooms
             if (Game.CurrentPlayer.IsNaked)
             {
                 ConsoleHelper.WriteLineWrap("You can't walk into school naked, you wing nut! " +
-                    "You've embarrased yourself and can't get to the 'Arbetsmarknad'. Game Over!!");
+                    "You've embarrased yourself and can't get to the 'Arbetsmarknad'.");
                 Game.EndGame();
                 
             }
@@ -29,7 +29,7 @@ namespace Zork_Grupp_L.Rooms
             if (Game.CurrentPlayer.InventoryFindItem(torchInventory, out BaseItem item))
             {
                 ConsoleHelper.WriteLineWrap("You can't bring fire into the school, you wing nut! " +
-                    "You've lost all you chances in getting a job, nobody likes an arsonist. Game over!");
+                    "You've lost all you chances in getting a job, nobody likes an arsonist.");
                 Game.EndGame();
             }
         }
