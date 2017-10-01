@@ -9,7 +9,7 @@ namespace Zork_Grupp_L.Commands
 		protected const string P_THE = @"(?: +the(?: +|$)|$| +)";
 		protected const string P_THROUGH = @"(?: +through(?: +|$)|$| +)";
 		protected const string P_THROUGHTHE = @"(?: +through" + P_THE + "|$| +)";
-	    protected const string P_ANDON = @"(?: +and|on(?: +|$)|$| +)";
+	    protected const string P_ANDONTHE = @"(?: +(?:and|on)" + P_THE + "|$)";
 
         public abstract string[] Syntax { get; }
 

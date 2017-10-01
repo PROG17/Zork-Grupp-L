@@ -14,7 +14,7 @@ namespace Zork_Grupp_L.Commands
     class CommandUse : BaseCommand
     {
         public override string[] Syntax { get; } = {
-            $@"(?<cmd>use){P_THE}(?<what1>.+)?{P_ANDON}(?<what2>.+)?",
+            $@"(?<cmd>use){P_THE}(?<what1>.+?)?{P_ANDONTHE}(?<what2>.+)?",
         };
 
         public override void Execute(Match match, string pattern)
