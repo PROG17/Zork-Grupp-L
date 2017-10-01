@@ -28,7 +28,8 @@ namespace Zork_Grupp_L.Commands
 				if (item is RoomExit exit)
 				{
 					ConsoleHelper.WriteLineWrap(
-						"You go through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
+						"You go through the {0} and end up in the {1}. {2}. \nIn this room you see {3}", 
+                        exit.Name, exit.NextRoom.Name, exit.NextRoom.Description, exit.NextRoom.InventoryListNames());
 					Game.GoToRoom(exit.NextRoom);
 				}
 				else

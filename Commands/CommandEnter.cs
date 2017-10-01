@@ -33,8 +33,9 @@ namespace Zork_Grupp_L.Commands
 					RoomExit exit = exits[0];
 
 					ConsoleHelper.WriteLineWrap(
-						"You leave through the {0} and end up in the {1}.", exit.Name, exit.NextRoom.Name);
-					Game.GoToRoom(exit.NextRoom);
+                        "You go through the {0} and end up in the {1}. {2}. \nIn this room you see {3}",
+                        exit.Name, exit.NextRoom.Name, exit.NextRoom.Description, exit.NextRoom.InventoryListNames());
+                    Game.GoToRoom(exit.NextRoom);
 				}
 				else if (exits.Count > 1)
 				{
