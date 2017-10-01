@@ -9,8 +9,9 @@ namespace Zork_Grupp_L.Commands
 		protected const string P_THE = @"(?: +the(?: +|$)|$| +)";
 		protected const string P_THROUGH = @"(?: +through(?: +|$)|$| +)";
 		protected const string P_THROUGHTHE = @"(?: +through" + P_THE + "|$| +)";
+	    protected const string P_ANDON = @"(?: +and|on(?: +|$)|$| +)";
 
-		public abstract string[] Syntax { get; }
+        public abstract string[] Syntax { get; }
 
 		public abstract void Execute(Match match, string pattern);
 

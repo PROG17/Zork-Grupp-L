@@ -20,6 +20,7 @@ namespace Zork_Grupp_L
 			new CommandDrop(),
 			new CommandExit(),
 			new CommandEnter(),
+            new CommandUse()
 		};
 
 		public static void StartGame()

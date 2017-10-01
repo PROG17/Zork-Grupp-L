@@ -51,6 +51,7 @@
     <Compile Include="Commands\CommandInspect.cs" />
     <Compile Include="Commands\CommandDrop.cs" />
     <Compile Include="Commands\CommandPickup.cs" />
+    <Compile Include="Commands\CommandUse.cs" />
     <Compile Include="Helpers\Colors.cs" />
     <Compile Include="Helpers\ConsoleHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
