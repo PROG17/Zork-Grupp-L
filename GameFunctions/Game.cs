@@ -12,7 +12,7 @@ namespace Zork_Grupp_L
 		public static Player CurrentPlayer { get; private set; }
 		public static Room CurrentRoom { get; private set; }
 		public static RoomRepository AllRooms { get; private set; }
-        public static bool GameOver { get; private set; }
+        public static bool GameOver { get; set; }
         
 		private static readonly BaseCommand[] commands = {
 			new CommandInspect(),
@@ -23,51 +23,35 @@ namespace Zork_Grupp_L
             new CommandUse()
 		};
 
-		public static void StartGame()
+		public static void RunGame()
 		{
-            GameOver = false;
-			AllRooms = new RoomRepository();
-
+			Console.Clear();
 			Console.ForegroundColor = Colors.ImportantColor;
 			Console.WriteLine("Welcome to our game, let's play!");
 			Console.ForegroundColor = Colors.DefaultColor;
-			
+
+			// Initialize variables
+            GameOver = false;
+			AllRooms = new RoomRepository();
 			CurrentPlayer = new Player();
+
 			GoToRoom(AllRooms.dungeon);
 			CurrentRoom.PrintRoomDescription();
-            
-			while (true)
+			
+			GameLoop();
+		}
+
+		private static void GameLoop()
+		{
+			while (!GameOver)
 			{
 				UserInput();
 			}
-		}
 
-        public static void EndGame()
-        {
-            GameOver = true;
-            do
-            {
-                Console.ForegroundColor = Colors.GameOverColor;
-                Console.WriteLine("Game Over!!");
-                Console.ForegroundColor = Colors.DefaultColor;
-                Console.WriteLine("\nDo you wanna play again? Y/N");
-                string menuInput = Console.ReadLine().ToLower();
-            
-                if (menuInput == "y")
-                {
-                    Console.Clear();
-                    StartGame();
-                }
-                else if (menuInput == "n")
-                {
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    Console.WriteLine("You have to type Y or N.");
-                }
-            } while (GameOver);
-        }
+			Console.ForegroundColor = Colors.GameOverColor;
+			Console.WriteLine("[ G A M E   O V E R ]");
+			Console.ForegroundColor = Colors.DefaultColor;
+		}
 
 		public static void UserInput()
 		{
@@ -110,10 +94,6 @@ namespace Zork_Grupp_L
 			CurrentRoom?.OnExitRoom();
 			CurrentRoom = nextRoom;
 			nextRoom.OnEnterRoom();
-            if (CurrentRoom == AllRooms.corridor)
-            {
-                AllRooms.corridor.IfUserCarriesUnauthorizedItems();
-            }
 		}
 	}
 }
