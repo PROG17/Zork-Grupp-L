@@ -4,7 +4,7 @@ using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Items
 {
-	public abstract class BaseItem : NamedObject
+    public abstract class BaseItem : NamedObject
 	{
 		/// <summary>
 		/// Example: "a" or "an". If null it will use the <see cref="StringHelper.AutoAorAn"/>
@@ -20,8 +20,9 @@ namespace Zork_Grupp_L.Items
 		/// The inventory this item belongs to.
 		/// </summary>
 		public Inventory CurrentInventory { get; private set; }
+        
 
-		protected event Action<Inventory> AddedToInventory;
+        protected event Action<Inventory> AddedToInventory;
 		protected event Action<Inventory> RemovedFromInventory; 
 
 		public void PrintItemDescription()
@@ -41,5 +42,12 @@ namespace Zork_Grupp_L.Items
 			if (newInventory != oldInventory && newInventory != null)
 				AddedToInventory?.Invoke(newInventory);
 		}
-	}
+
+	    public virtual bool UseOnItem(BaseItem otherItem)
+	    {
+	        return false;
+	    }
+
+
+    }
 }

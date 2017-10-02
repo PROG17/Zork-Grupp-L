@@ -14,5 +14,8 @@ namespace Zork_Grupp_L.Items
 		public override string Name { get; }
 		public override string Description { get; }
 		public Room NextRoom { get; }
-	}
+
+        public bool IsLocked { get; set; }
+    
+    }
 }

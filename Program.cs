@@ -13,12 +13,12 @@ namespace Zork_Grupp_L
 		{
 			do {
 				Game.RunGame();
-			} while (PromtRestart());
+			} while (PromptRestart());
 
 			Console.ReadKey();
 		}
 
-		private static bool PromtRestart()
+		private static bool PromptRestart()
 		{
 			while (true)
 			{

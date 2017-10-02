@@ -16,6 +16,7 @@ namespace Zork_Grupp_L.Items.ComputerRoom
 
         public override string Name { get; }
         public override string Description { get; }
+       
     }
 }
 

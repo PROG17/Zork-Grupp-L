@@ -4,12 +4,15 @@ using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Items.Dungeon
 {
+    using System.Dynamic;
+
     public class ItemFrockCoat : InventoryItem
 	{
 		public ItemFrockCoat()
 		{
 			this.Name = "frock coat";
 			this.Description = "It's a sweet looking frock coat, straight outta Nobelfesten.";
+
 
 			AddedToInventory += OnAddedToInventory;
 			RemovedFromInventory += OnRemovedFromInventory;
@@ -18,7 +21,8 @@ namespace Zork_Grupp_L.Items.Dungeon
 		public override string Name { get; }
 		public override string Description { get; }
 
-		private void OnAddedToInventory(Inventory inventory)
+
+        private void OnAddedToInventory(Inventory inventory)
 		{
 			if (inventory is Player)
 			{
@@ -34,5 +38,6 @@ namespace Zork_Grupp_L.Items.Dungeon
 				ConsoleHelper.WriteLineWrap("You feel the chills approaching. You've no clothes on, you're naked!" +
 				                            " Better pick up that coat again.");
 		}
-	}
+        
+    }
 }

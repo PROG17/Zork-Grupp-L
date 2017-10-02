@@ -2,7 +2,9 @@
 
 namespace Zork_Grupp_L.Rooms
 {
-	public class RoomRepository
+    using Zork_Grupp_L.Items.Dungeon;
+
+    public class RoomRepository
 	{
 		public Dungeon dungeon = new Dungeon();
 		public Corridor corridor = new Corridor();
@@ -11,11 +13,9 @@ namespace Zork_Grupp_L.Rooms
 
 		public RoomRepository()
 		{
-			dungeon.AddRoomExit(corridor,
-				name: "exit door",
-				description: "This door seems to lead to a corridor.");
+		    dungeon.AddToInventory(new ExitBurnDownableDoor(corridor));
 
-			corridor.AddRoomExit(dungeon,
+            corridor.AddRoomExit(dungeon,
 				name: "dungeon door",
 				description: "This door seems to lead to that hideous dungeon you came from.");
             corridor.AddRoomExit(computerRoom,
