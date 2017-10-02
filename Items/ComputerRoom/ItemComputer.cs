@@ -32,6 +32,11 @@ namespace Zork_Grupp_L.Items.ComputerRoom
                     Game.GameOver = true;
                     this.PrintItemDescription();
                     return true;
+
+                case ItemDropTable _:
+                    Game.GameOver = true;
+                    return true;
+
             }
             return false;
         }

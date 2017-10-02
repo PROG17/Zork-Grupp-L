@@ -59,6 +59,7 @@
     <Compile Include="Items\BaseItem.cs" />
     <Compile Include="Items\Classroom\ItemCharger.cs" />
     <Compile Include="Items\ComputerRoom\FurnishComputer.cs" />
+    <Compile Include="Items\ComputerRoom\ItemDropTable.cs" />
     <Compile Include="Items\ComputerRoom\ItemComputer.cs" />
     <Compile Include="Items\Dungeon\ExitBurnDownableDoor.cs" />
     <Compile Include="Items\Dungeon\FurnishChair.cs" />
