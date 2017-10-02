@@ -1,12 +1,9 @@
-﻿using System;
-using Zork_Grupp_L.GameFunctions;
+﻿using Zork_Grupp_L.GameFunctions;
 using Zork_Grupp_L.Helpers;
 
 namespace Zork_Grupp_L.Items.Dungeon
 {
-    using System.Dynamic;
-
-    public class ItemFrockCoat : InventoryItem
+	public class ItemFrockCoat : InventoryItem
 	{
 		public ItemFrockCoat()
 		{

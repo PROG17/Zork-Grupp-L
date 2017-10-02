@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zork_Grupp_L.Items.ComputerRoom
+﻿namespace Zork_Grupp_L.Items.ComputerRoom
 {
-    using Zork_Grupp_L.Helpers;
-    using Zork_Grupp_L.Items.Classroom;
-    using Zork_Grupp_L.Items.Dungeon;
+	using Zork_Grupp_L.Items.Classroom;
 
-    using static Game;
-
-    public class ItemComputer : InventoryItem
+	public class ItemComputer : InventoryItem
     {
         public override string Name => this.DisCharged ? "discharged laptop" : "working laptop";
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zork_Grupp_L.Helpers;
-
-namespace Zork_Grupp_L
+﻿namespace Zork_Grupp_L
 {
     public abstract class NamedObject
     {

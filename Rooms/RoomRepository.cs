@@ -1,6 +1,4 @@
-﻿using Zork_Grupp_L.Items;
-
-namespace Zork_Grupp_L.Rooms
+﻿namespace Zork_Grupp_L.Rooms
 {
     using Zork_Grupp_L.Items.Dungeon;
 

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zork_Grupp_L.Items.Classroom;
+﻿using Zork_Grupp_L.Items.Classroom;
 
 namespace Zork_Grupp_L.Rooms
 {
-    using Zork_Grupp_L.Helpers;
-    using Zork_Grupp_L.Items.ComputerRoom;
-
-    public class Classroom : Room
+	public class Classroom : Room
     {
         public Classroom()
         {

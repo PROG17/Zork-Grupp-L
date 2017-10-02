@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Zork_Grupp_L.Helpers;
-using Zork_Grupp_L.Items;
 
 namespace Zork_Grupp_L
 {

@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zork_Grupp_L.GameFunctions;
 using Zork_Grupp_L.Helpers;
-using Zork_Grupp_L.Items.Dungeon;
 
 namespace Zork_Grupp_L
 {
-    using Zork_Grupp_L.Rooms;
-
-    public class Player : Inventory
+	public class Player : Inventory
     {
         public Player()
         {
