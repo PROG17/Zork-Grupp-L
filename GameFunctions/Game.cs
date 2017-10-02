@@ -14,6 +14,7 @@ namespace Zork_Grupp_L
 		public static Room CurrentRoom { get; private set; }
 		public static RoomRepository AllRooms { get; private set; }
         public static bool GameOver { get; set; }
+        public static bool Win { get; set; }
         
 		private static readonly BaseCommand[] commands = {
 			new CommandInspect(),
@@ -38,20 +39,31 @@ namespace Zork_Grupp_L
 
 			GoToRoom(AllRooms.dungeon);
 			CurrentRoom.PrintRoomDescription();
+            CurrentPlayer.PrintPlayerDescription();
 			
 			GameLoop();
 		}
 
 		private static void GameLoop()
 		{
-			while (!GameOver)
+		    while (!GameOver)
 			{
 				UserInput();
 			}
 
-			Console.ForegroundColor = Colors.GameOverColor;
-			Console.WriteLine("[ G A M E   O V E R ]");
-			Console.ForegroundColor = Colors.DefaultColor;
+		    if (Win)
+		    {
+		        Console.ForegroundColor = Colors.WinAtLifeColor;
+                ConsoleHelper.WriteLineWrap("You can now do stuff in school, I guess. You will be able to enter the 'Arbetsmarknaden' (probably).");
+	            Console.WriteLine("[ Y O U   W I N ! ]");
+		        Console.ForegroundColor = Colors.DefaultColor;
+		    }
+		    else
+		    {
+		        Console.ForegroundColor = Colors.GameOverColor;
+		        Console.WriteLine("[ G A M E   O V E R ]");
+		        Console.ForegroundColor = Colors.DefaultColor;
+		    }
 		}
 
 		public static void UserInput()

@@ -9,5 +9,6 @@ namespace Zork_Grupp_L.Helpers
 		public const ConsoleColor ErrorColor = ConsoleColor.DarkRed;
 		public const ConsoleColor ImportantColor = ConsoleColor.Yellow;
         public const ConsoleColor GameOverColor = ConsoleColor.Red;
+	    public const ConsoleColor WinAtLifeColor = ConsoleColor.Green;
 	}
 }

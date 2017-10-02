@@ -6,17 +6,34 @@ using System.Threading.Tasks;
 
 namespace Zork_Grupp_L.Items.ComputerRoom
 {
-    public class ItemComputer : InventoryItem
-    {       
-            public ItemComputer()
-            {
-                this.Name = "laptop";
-                this.Description = "This computer seems to be running on windows vista. " +
-                "It also seems to be running low on battery.";
-            }
+    using Zork_Grupp_L.Helpers;
+    using Zork_Grupp_L.Items.Classroom;
+    using Zork_Grupp_L.Items.Dungeon;
 
-            public override string Name { get; }
-            public override string Description { get; }
-       
+    using static Game;
+
+    public class ItemComputer : InventoryItem
+    {
+        public override string Name => this.DisCharged ? "discharged laptop" : "working laptop";
+
+        public override string Description => this.DisCharged
+                                                  ? "This computer needs to be charged, or it won't turn on."
+                                                  : "This computer is now charged and working great, since ";
+
+        public bool DisCharged { get; private set; } = true;
+
+        public override bool UseOnItem(BaseItem otherItem)
+        {
+            switch (otherItem)
+            {
+                case ItemCharger _:
+                    this.DisCharged = false;
+                    Game.Win = true;
+                    Game.GameOver = true;
+                    this.PrintItemDescription();
+                    return true;
+            }
+            return false;
+        }
     }
 }

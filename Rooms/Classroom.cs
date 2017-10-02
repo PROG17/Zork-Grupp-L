@@ -7,6 +7,9 @@ using Zork_Grupp_L.Items.Classroom;
 
 namespace Zork_Grupp_L.Rooms
 {
+    using Zork_Grupp_L.Helpers;
+    using Zork_Grupp_L.Items.ComputerRoom;
+
     public class Classroom : Room
     {
         public Classroom()
@@ -19,6 +22,11 @@ namespace Zork_Grupp_L.Rooms
 
         public override string Name { get; }
         public override string Description { get; }
+
+        private void CheckUserCarriesUnauthorizedItems()
+        {
+
+        }
     }
 }
 

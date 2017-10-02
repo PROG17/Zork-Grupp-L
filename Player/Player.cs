@@ -49,7 +49,7 @@ namespace Zork_Grupp_L
 			Console.ForegroundColor = Colors.DefaultColor;
 		    ConsoleHelper.WriteLineWrap("You find yourself being {0}, a wild {1}adventurer in the {2}. ",
 			    this.Name,
-			    this.IsNaked ? "naked " : string.Empty,
+			    this.IsNaked ? "NAKED " : string.Empty,
 			    Game.CurrentRoom.Name);
 
 			this.PrintPlayerInventory();
