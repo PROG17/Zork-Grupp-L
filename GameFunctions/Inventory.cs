@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Zork_Grupp_L.Helpers;
 using Zork_Grupp_L.Items;
 
@@ -54,43 +55,30 @@ namespace Zork_Grupp_L.GameFunctions
         }
 
 	    /// <summary>
-	    /// Returns true if this inventory contains an item where its name matches the <paramref name="needle"/> using <see cref="StringHelper.KindaEquals"/>.
+	    /// Returns true if this inventory contains an item where its name matches the <paramref name="needle"/> using NameHelper.FindUniqueMatches.
 	    /// </summary>
 	    public bool InventoryContains(string needle)
 	    {
-		    foreach (BaseItem inventoryItem in this.items)
-		    {
-			    if (StringHelper.KindaEquals(inventoryItem.Name, needle))
-				    return true;
-		    }
-		    return false;
+		    var matches = this.items.FindUniqueMatches(needle);
+		    return matches.Count == 1;
 	    }
 
 		/// <summary>
 		/// Returns true if this inventory contains an item of said type.
 		/// </summary>
 		public bool InventoryContains<ItemType>() where ItemType : BaseItem
-	    {
-		    foreach (BaseItem inventoryItem in this.items)
-		    {
-			    if (inventoryItem is ItemType)
-				    return true;
-		    }
-		    return false;
-	    }
+		{
+			return this.items.Any(i => i is ItemType);
+		}
 
 	    /// <summary>
 	    /// Returns true if this inventory contains an item of said type
-	    /// and its name matches the <paramref name="needle"/> using <see cref="StringHelper.KindaEquals"/>.
+	    /// and its name matches the <paramref name="needle"/> using NameHelper.FindUniqueMatches.
 	    /// </summary>
 	    public bool InventoryContains<ItemType>(string needle) where ItemType : BaseItem
 	    {
-		    foreach (BaseItem inventoryItem in this.items)
-		    {
-			    if (inventoryItem is ItemType && StringHelper.KindaEquals(inventoryItem.Name, needle))
-				    return true;
-		    }
-		    return false;
+		    List<ItemType> matches = this.items.OfType<ItemType>().FindUniqueMatches(needle);
+		    return matches.Count == 1;
 	    }
 
 		/// <summary>
@@ -152,23 +140,23 @@ namespace Zork_Grupp_L.GameFunctions
 		/// </summary>
 		public List<BaseItem> InventoryFindItems(string needle)
 		{
-			return InventoryFindItems<BaseItem>(match: i => StringHelper.KindaEquals(needle, i.Name));
+			return this.InventoryFindItems(needle, i => i.Name);
 		}
 
 		/// <summary>
 		/// Try find an item in the inventory. Returns list of all matching items. Returns empty list if none.
 		/// </summary>
-		public List<BaseItem> InventoryFindItems(Predicate<BaseItem> match)
-	    {
-		    return InventoryFindItems<BaseItem>(match: match);
-	    }
+		public List<BaseItem> InventoryFindItems(string needle, Func<BaseItem, string> selector)
+		{
+			return items.FindUniqueMatches(needle, selector);
+		}
 
 	    /// <summary>
 	    /// Try find an item type in the inventory. Returns list of all matching items. Returns empty list if none.
 	    /// </summary>
 	    public List<ItemType> InventoryFindItems<ItemType>() where ItemType : BaseItem
 	    {
-		    return InventoryFindItems<ItemType>(match: i => true);
+		    return items.OfType<ItemType>().ToList();
 	    }
 
 	    /// <summary>
@@ -176,24 +164,15 @@ namespace Zork_Grupp_L.GameFunctions
 	    /// </summary>
 	    public List<ItemType> InventoryFindItems<ItemType>(string needle) where ItemType : BaseItem
 	    {
-		    return InventoryFindItems<ItemType>(match: i => StringHelper.KindaEquals(needle, i.Name));
+		    return this.InventoryFindItems<ItemType>(needle, i => i.Name);
 	    }
 
 		/// <summary>
 		/// Try find an item by its type and a predicate in the inventory. Returns list of all matching items. Returns empty list if none.
 		/// </summary>
-		public List<ItemType> InventoryFindItems<ItemType>(Predicate<ItemType> match) where ItemType : BaseItem
-	    {
-		    var itemMatches = new List<ItemType>();
-		    if (match == null) return itemMatches;
-
-			foreach (BaseItem inventoryItem in this.items)
-		    {
-			    if (inventoryItem is ItemType i && match(i))
-				    itemMatches.Add(i);
-		    }
-
-		    return itemMatches;
+		public List<ItemType> InventoryFindItems<ItemType>(string needle, Func<ItemType, string> selector) where ItemType : BaseItem
+		{
+			return this.items.OfType<ItemType>().FindUniqueMatches(needle, selector);
 	    }
 
 		/// <summary>
@@ -201,7 +180,7 @@ namespace Zork_Grupp_L.GameFunctions
 		/// </summary>
 		public bool InventoryTryFindItem(string needle, out BaseItem item)
 	    {
-		    List<BaseItem> items = InventoryFindItems(needle);
+		    List<BaseItem> items = this.InventoryFindItems(needle);
 
 		    item = items.Count == 1 ? items[0] : null;
 		    return item != null;
@@ -210,9 +189,9 @@ namespace Zork_Grupp_L.GameFunctions
 		/// <summary>
 		/// Try find an item in the inventory. Gives null if not a clear match.
 		/// </summary>
-		public bool InventoryTryFindItem(Predicate<BaseItem> match, out BaseItem item)
+		public bool InventoryTryFindItem(string needle, Func<BaseItem, string> selector, out BaseItem item)
 		{
-			List<BaseItem> items = InventoryFindItems(match);
+			List<BaseItem> items = this.InventoryFindItems(needle, selector);
 
 			item = items.Count == 1 ? items[0] : null;
 			return item != null;
@@ -220,15 +199,7 @@ namespace Zork_Grupp_L.GameFunctions
 
 	    public bool InventoryTryFindItem<ItemType>(out ItemType item) where ItemType : BaseItem
 	    {
-		    List<ItemType> items = InventoryFindItems<ItemType>();
-
-		    item = items.Count == 1 ? items[0] : null;
-		    return item != null;
-	    }
-
-	    public bool InventoryTryFindItem<ItemType>(Predicate<ItemType> match, out ItemType item) where ItemType : BaseItem
-	    {
-		    List<ItemType> items = InventoryFindItems<ItemType>(match);
+		    List<ItemType> items = this.InventoryFindItems<ItemType>();
 
 		    item = items.Count == 1 ? items[0] : null;
 		    return item != null;
@@ -237,6 +208,14 @@ namespace Zork_Grupp_L.GameFunctions
 	    public bool InventoryTryFindItem<ItemType>(string needle, out ItemType item) where ItemType : BaseItem
 	    {
 		    List<ItemType> items = InventoryFindItems<ItemType>(needle);
+
+		    item = items.Count == 1 ? items[0] : null;
+		    return item != null;
+	    }
+
+	    public bool InventoryTryFindItem<ItemType>(string needle, Func<ItemType, string> selector, out ItemType item) where ItemType : BaseItem
+	    {
+		    List<ItemType> items = InventoryFindItems<ItemType>(needle, selector);
 
 		    item = items.Count == 1 ? items[0] : null;
 		    return item != null;

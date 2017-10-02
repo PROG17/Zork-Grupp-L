@@ -36,17 +36,31 @@ namespace Zork_Grupp_L.Commands
 		}
 
 
-		public static List<BaseItem> FindItems(string nameMatch)
+		public static List<BaseItem> FindItems(string needle)
 		{
-			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(nameMatch);
-			items.AddRange(Game.CurrentPlayer.InventoryFindItems(nameMatch));
+			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(needle);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems(needle));
 			return items;
 		}
 
-		public static List<BaseItem> FindItems(Predicate<BaseItem> match)
+		public static List<BaseItem> FindItems(string needle, Func<BaseItem, string> selector)
 		{
-			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(match);
-			items.AddRange(Game.CurrentPlayer.InventoryFindItems(match));
+			List<BaseItem> items = Game.CurrentRoom.InventoryFindItems(needle, selector);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems(needle, selector));
+			return items;
+		}
+
+		public static List<ItemType> FindItems<ItemType>(string needle) where ItemType : BaseItem
+		{
+			List<ItemType> items = Game.CurrentRoom.InventoryFindItems<ItemType>(needle);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems<ItemType>(needle));
+			return items;
+		}
+
+		public static List<ItemType> FindItems<ItemType>(string needle, Func<ItemType, string> selector) where ItemType : BaseItem
+		{
+			List<ItemType> items = Game.CurrentRoom.InventoryFindItems<ItemType>(needle, selector);
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems<ItemType>(needle, selector));
 			return items;
 		}
 
