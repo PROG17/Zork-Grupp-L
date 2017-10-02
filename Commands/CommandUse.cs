@@ -25,36 +25,10 @@ namespace Zork_Grupp_L.Commands
 
 		        if (TryFindItem(whatToUse1, out BaseItem item1)
 		            && TryFindItem(whatToUse2, out BaseItem item2))
-		        {
-			        //if (item1 is InventoryItem && (item2 is InventoryItem || item2 is FurnishingItem))
-			        //{
-			            string tempName1 = item1.Name;
-			            string tempName2 = item2.Name;
-			            if (item1.UseOnItem(item2) == true)
-			            {
-
-                            ConsoleHelper.WriteLineWrap("You used {0} on {1}. ", tempName1, tempName2);
-                        }
-                        else if (item2.UseOnItem(item1) == true)
-			            {
-			                ConsoleHelper.WriteLineWrap("You used {0} on {1}. ", tempName1, tempName2);
-                        }
-                        else
-                        {
-                            ConsoleHelper.WriteLineWrap("Nothing happened.");
-                        }
-
-			        //}
-			        //else
-			        //{
-				       // Console.ForegroundColor = Colors.ErrorColor;
-				       // ConsoleHelper.WriteLineWrap(
-					      //  "You cannot use {0} on {1}",
-					      //  item1.PrefixedName,
-					      //  item2.PrefixedName);
-			        //}
-		        }
-	        }
+				{
+					UseItemOnItem(item1, item2);
+				}
+			}
 	        else if (g_what1.Success)
 	        {
 		        string whatToUse1 = g_what1.Value;
@@ -70,5 +44,24 @@ namespace Zork_Grupp_L.Commands
 		        ConsoleHelper.WriteLineWrap("Use what?");
 	        }
         }
-    }
+
+		public static void UseItemOnItem(BaseItem item1, BaseItem item2)
+		{
+			string tempName1 = item1.Name;
+			string tempName2 = item2.Name;
+			if (item1.UseOnItem(item2))
+			{
+
+				ConsoleHelper.WriteLineWrap("You used {0} on {1}. ", tempName1, tempName2);
+			}
+			else if (item2.UseOnItem(item1))
+			{
+				ConsoleHelper.WriteLineWrap("You used {0} on {1}. ", tempName1, tempName2);
+			}
+			else
+			{
+				ConsoleHelper.WriteLineWrap("Nothing happened.");
+			}
+		}
+	}
 }

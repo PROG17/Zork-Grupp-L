@@ -50,6 +50,13 @@ namespace Zork_Grupp_L.Commands
 			return items;
 		}
 
+		public static List<ItemType> FindItems<ItemType>() where ItemType : BaseItem
+		{
+			List<ItemType> items = Game.CurrentRoom.InventoryFindItems<ItemType>();
+			items.AddRange(Game.CurrentPlayer.InventoryFindItems<ItemType>());
+			return items;
+		}
+
 		public static List<ItemType> FindItems<ItemType>(string needle) where ItemType : BaseItem
 		{
 			List<ItemType> items = Game.CurrentRoom.InventoryFindItems<ItemType>(needle);

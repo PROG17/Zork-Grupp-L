@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\CommandUseItemPreset.cs" />
     <Compile Include="Commands\CommandEnter.cs" />
     <Compile Include="Commands\CommandExit.cs" />
     <Compile Include="Commands\CommandInspect.cs" />

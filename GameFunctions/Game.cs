@@ -1,5 +1,7 @@
 ﻿using System;
 using Zork_Grupp_L.Helpers;
+using Zork_Grupp_L.Items;
+using Zork_Grupp_L.Items.Classroom;
 
 namespace Zork_Grupp_L
 {
@@ -20,7 +22,9 @@ namespace Zork_Grupp_L
 			new CommandDrop(),
 			new CommandExit(),
 			new CommandEnter(),
-            new CommandUse()
+            new CommandUse(),
+			new CommandUseItemPreset<ItemTorch>("burn"),
+			new CommandUseItemPreset<ItemCharger>("charge"),
 		};
 
 		public static void RunGame()

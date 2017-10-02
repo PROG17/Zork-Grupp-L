@@ -22,6 +22,7 @@ namespace Zork_Grupp_L.Items
 	    {
 		    if (otherItem is FurnishPuddle)
 		    {
+				ConsoleHelper.WriteLineWrap("The torch extinguishes from the water.");
 			    this.IsLit = false;
 			    return true;
 		    }
