@@ -37,12 +37,11 @@ namespace Zork_Grupp_L.Commands
 					string whatToInspect = g_what.Value;
 					string whatToInspectLower = whatToInspect.ToLower();
 
-					/*if (StringHelper.KindaEquals(whatToInspect, Game.CurrentRoom.Name)
-					    || whatToInspectLower == "room")
+					if (whatToInspectLower == "room")
 					{
 						Game.CurrentRoom.PrintRoomDescription();
 					}
-					else //*/if (StringHelper.EqualsAny(whatToInspectLower,
+					else if (StringHelper.EqualsAny(whatToInspectLower,
 						"self", "myself", "me", "yourself", "player", "user"))
 					{
 						Game.CurrentPlayer.PrintPlayerDescription();
