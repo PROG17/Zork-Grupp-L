@@ -16,7 +16,7 @@ namespace Zork_Grupp_L
         public Player()
         {
 	        Console.ForegroundColor = Colors.DefaultColor;
-	        ConsoleHelper.WriteLineWrap("What's your Name?");
+	        ConsoleHelper.WriteLineWrap("What's your name?");
 
 	        string username = null;
 	        while (string.IsNullOrEmpty(username))

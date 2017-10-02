@@ -30,7 +30,7 @@ namespace Zork_Grupp_L
 			Console.Clear();
 			Console.ForegroundColor = Colors.ImportantColor;
 			Console.WriteLine("Welcome to our game, let's play!");
-		    Console.WriteLine("Please try your best to get out onto the 'arbetsmarknaden'!");
+		    Console.WriteLine("Please try your best to get 'ut på arbetsmarknaden'!");
             Console.ForegroundColor = Colors.DefaultColor;
 
 			// Initialize variables
