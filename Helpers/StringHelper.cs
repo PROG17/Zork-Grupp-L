@@ -9,7 +9,17 @@ namespace Zork_Grupp_L.Helpers
 {
 	public static class StringHelper
 	{
+		public static bool ContainsWord(this string haystack, string needle)
+		{
+			if (needle == null || haystack == null) return false;
 
+			string[] haystackWords = haystack.Trim().ToLower().Split(' ');
+			string needleTrimmed = needle.Trim().ToLower();
+
+			return haystackWords.Contains(needleTrimmed);
+		}
+
+		[Obsolete("Use NameHelper extension and StringHelper.ContainsWord instead.", true)]
 		public static bool KindaEquals(string a, string b)
 		{
 			if (a == null || b == null) return false;

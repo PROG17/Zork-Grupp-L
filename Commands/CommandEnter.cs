@@ -25,8 +25,7 @@ namespace Zork_Grupp_L.Commands
 
 				// The search algo
 
-				List<RoomExit> exits = FindItems(i => i is RoomExit e && StringHelper.KindaEquals(e.NextRoom.Name, whatToEnter))
-					.Cast<RoomExit>().ToList();
+				List<RoomExit> exits = FindItems<RoomExit>(whatToEnter, e=>e.NextRoom.Name);
 
 				if (exits.Count == 1)
 				{
